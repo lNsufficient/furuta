@@ -1,0 +1,1144 @@
+Library {
+  Name			  "furuta_lib"
+  Version		  4.00
+  LibraryLinkDisplay	  "none"
+  CovSaveName		  "covdata"
+  CovMetricSettings	  "dw"
+  CovNameIncrementing	  off
+  CovHtmlReporting	  on
+  BlockNameDataTip	  off
+  BlockParametersDataTip  off
+  BlockDescriptionStringDataTip	off
+  ToolBar		  off
+  StatusBar		  off
+  BrowserShowLibraryLinks off
+  BrowserLookUnderMasks	  off
+  Created		  "Fri May  4 10:03:49 2001"
+  Creator		  "jakesson"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "jakesson"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Thu Feb  7 16:20:53 2002"
+  ModelVersionFormat	  "1.%<AutoIncrement:12>"
+  ConfigurationManager	  "none"
+  SimParamPage		  "Solver"
+  AlgebraicLoopMsg	  "warning"
+  MinStepSizeMsg	  "warning"
+  UnconnectedInputMsg	  "warning"
+  UnconnectedOutputMsg	  "warning"
+  UnconnectedLineMsg	  "warning"
+  InheritedTsInSrcMsg	  "warning"
+  SingleTaskRateTransMsg  "none"
+  MultiTaskRateTransMsg	  "error"
+  IntegerOverflowMsg	  "warning"
+  CheckForMatrixSingularity "none"
+  UnnecessaryDatatypeConvMsg "none"
+  Int32ToFloatConvMsg	  "warning"
+  InvalidFcnCallConnMsg	  "error"
+  SignalLabelMismatchMsg  "none"
+  LinearizationMsg	  "none"
+  VectorMatrixConversionMsg "none"
+  SfunCompatibilityCheckMsg "none"
+  BlockPriorityViolationMsg "warning"
+  ArrayBoundsChecking	  "none"
+  ConsistencyChecking	  "none"
+  Profile		  off
+  SimulationMode	  "normal"
+  RTWRetainRTWFile	  off
+  RTWMakeCommand	  "make_rtw"
+  RTWGenerateCodeOnly	  off
+  TLCProfiler		  off
+  TLCDebug		  off
+  TLCCoverage		  off
+  ExtModeMexFile	  "ext_comm"
+  ExtModeBatchMode	  off
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  ExtModeSkipDownloadWhenConnect off
+  ExtModeLogAll		  on
+  ExtModeAutoUpdateStatusClock off
+  BlockDefaults {
+    Orientation		    "right"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  LineDefaults {
+    FontName		    "Helvetica"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  System {
+    Name		    "furuta_lib"
+    Location		    [901, 403, 1157, 573]
+    Open		    on
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    200
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "usletter"
+    PaperUnits		    "inches"
+    ZoomFactor		    "100"
+    ReportName		    "simulink-default.rpt"
+    Block {
+      BlockType		      SubSystem
+      Name		      "Furuta Pendulum\nwith Friction\nDiscretized"
+      Ports		      [1, 1]
+      Position		      [100, 39, 155, 91]
+      AncestorBlock	      "furuta_lib/Furuta Pendulum\nwith Friction\nDisc"
+"retized"
+      ShowPortLabels	      on
+      TreatAsAtomicUnit	      off
+      RTWSystemCode	      "Auto"
+      RTWFcnNameOpts	      "Auto"
+      RTWFileNameOpts	      "Auto"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      System {
+	Name			"Furuta Pendulum\nwith Friction\nDiscretized"
+	Location		[423, 740, 1023, 978]
+	Open			on
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "u"
+	  Position		  [30, 98, 60, 112]
+	  Port			  "1"
+	  LatchInput		  off
+	  Interpolate		  on
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Friction Model\nCoulomb, Stic."
+	  Ports			  [1, 1]
+	  Position		  [95, 81, 150, 129]
+	  ShowPortLabels	  on
+	  TreatAsAtomicUnit	  off
+	  RTWSystemCode		  "Auto"
+	  RTWFcnNameOpts	  "Auto"
+	  RTWFileNameOpts	  "Auto"
+	  System {
+	    Name		    "Friction Model\nCoulomb, Stic."
+	    Location		    [783, 461, 1221, 687]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u_"
+	      Position		      [160, 53, 190, 67]
+	      Port		      "1"
+	      LatchInput	      off
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      SubSystem
+	      Name		      "Friction\nmodel\nrevised"
+	      Ports		      [2, 1]
+	      Position		      [215, 47, 265, 98]
+	      ShowPortLabels	      on
+	      TreatAsAtomicUnit	      off
+	      RTWSystemCode	      "Auto"
+	      RTWFcnNameOpts	      "Auto"
+	      RTWFileNameOpts	      "Auto"
+	      System {
+		Name			"Friction\nmodel\nrevised"
+		Location		[342, 551, 911, 774]
+		Open			off
+		ModelBrowserVisibility	off
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"A4"
+		PaperUnits		"centimeters"
+		ZoomFactor		"100"
+		Block {
+		  BlockType		  Inport
+		  Name			  "u"
+		  Position		  [30, 18, 60, 32]
+		  Port			  "1"
+		  LatchInput		  off
+		  Interpolate		  on
+		}
+		Block {
+		  BlockType		  Inport
+		  Name			  "phidot"
+		  Position		  [55, 128, 85, 142]
+		  Port			  "2"
+		  LatchInput		  off
+		  Interpolate		  on
+		}
+		Block {
+		  BlockType		  Fcn
+		  Name			  "Fcn"
+		  Position		  [300, 65, 360, 95]
+		  Expr			  "u(1)*(exp(-(50*u(2))^6))"
+		}
+		Block {
+		  BlockType		  Fcn
+		  Name			  "Fcn1"
+		  Position		  [300, 130, 360, 160]
+		  Expr			  "u(1)*(1-exp(-(50*u(2))^6))"
+		}
+		Block {
+		  BlockType		  Fcn
+		  Name			  "Fcn2"
+		  Position		  [190, 120, 250, 150]
+		  Expr			  "(u<0)*u*Fscomp_neg+(u>0)*u*Fscomp_p"
+"os"
+		}
+		Block {
+		  BlockType		  Mux
+		  Name			  "Mux"
+		  Ports			  [2, 1]
+		  Position		  [275, 54, 280, 101]
+		  ShowName		  off
+		  Inputs		  "2"
+		  DisplayOption		  "bar"
+		}
+		Block {
+		  BlockType		  Mux
+		  Name			  "Mux1"
+		  Ports			  [2, 1]
+		  Position		  [275, 126, 280, 164]
+		  ShowName		  off
+		  Inputs		  "2"
+		  DisplayOption		  "bar"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation"
+		  Position		  [205, 50, 235, 80]
+		  UpperLimit		  "Fscomp_pos"
+		  LowerLimit		  "-Fscomp_neg"
+		  LinearizeAsGain	  on
+		}
+		Block {
+		  BlockType		  Signum
+		  Name			  "Sign"
+		  Position		  [135, 119, 170, 151]
+		}
+		Block {
+		  BlockType		  Sum
+		  Name			  "Sum1"
+		  Ports			  [2, 1]
+		  Position		  [455, 92, 485, 123]
+		  IconShape		  "rectangular"
+		  Inputs		  "+-"
+		  SaturateOnIntegerOverflow on
+		}
+		Block {
+		  BlockType		  Sum
+		  Name			  "Sum2"
+		  Ports			  [2, 1]
+		  Position		  [395, 97, 425, 128]
+		  IconShape		  "rectangular"
+		  Inputs		  "++"
+		  SaturateOnIntegerOverflow on
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "u_"
+		  Position		  [510, 103, 540, 117]
+		  Port			  "1"
+		  OutputWhenDisabled	  "held"
+		  InitialOutput		  "0"
+		}
+		Line {
+		  SrcBlock		  "Fcn2"
+		  SrcPort		  1
+		  DstBlock		  "Mux1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Sign"
+		  SrcPort		  1
+		  DstBlock		  "Fcn2"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Fcn1"
+		  SrcPort		  1
+		  Points		  [10, 0; 0, -25]
+		  DstBlock		  "Sum2"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Mux1"
+		  SrcPort		  1
+		  DstBlock		  "Fcn1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Saturation"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Mux"
+		  SrcPort		  1
+		  DstBlock		  "Fcn"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Fcn"
+		  SrcPort		  1
+		  Points		  [10, 0; 0, 25]
+		  DstBlock		  "Sum2"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "phidot"
+		  SrcPort		  1
+		  Points		  [0, 0; 20, 0]
+		  Branch {
+		    Points		    [0, -35; 150, 0]
+		    DstBlock		    "Mux"
+		    DstPort		    2
+		  }
+		  Branch {
+		    Points		    [0, 45; 145, 0; 0, -25]
+		    DstBlock		    "Mux1"
+		    DstPort		    2
+		  }
+		  Branch {
+		    DstBlock		    "Sign"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  Labels		  [0, 0]
+		  SrcBlock		  "Sum1"
+		  SrcPort		  1
+		  DstBlock		  "u_"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "u"
+		  SrcPort		  1
+		  Points		  [0, 0; 45, 0]
+		  Branch {
+		    Points		    [0, 40]
+		    DstBlock		    "Saturation"
+		    DstPort		    1
+		  }
+		  Branch {
+		    Points		    [330, 0]
+		    DstBlock		    "Sum1"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  SrcBlock		  "Sum2"
+		  SrcPort		  1
+		  DstBlock		  "Sum1"
+		  DstPort		  2
+		}
+	      }
+	    }
+	    Block {
+	      BlockType		      From
+	      Name		      "From"
+	      Position		      [110, 77, 160, 93]
+	      CloseFcn		      "tagdialog Close"
+	      GotoTag		      "phidot"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "u"
+	      Position		      [295, 68, 325, 82]
+	      Port		      "1"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "0"
+	    }
+	    Line {
+	      SrcBlock		      "Friction\nmodel\nrevised"
+	      SrcPort		      1
+	      DstBlock		      "u"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "From"
+	      SrcPort		      1
+	      DstBlock		      "Friction\nmodel\nrevised"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "u_"
+	      SrcPort		      1
+	      DstBlock		      "Friction\nmodel\nrevised"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Furuta pendulum"
+	  Ports			  [1, 4]
+	  Position		  [205, 73, 295, 132]
+	  ShowPortLabels	  on
+	  TreatAsAtomicUnit	  off
+	  RTWSystemCode		  "Auto"
+	  RTWFcnNameOpts	  "Auto"
+	  RTWFileNameOpts	  "Auto"
+	  MaskPromptString	  "Pendulum Length|Mass of Pendulum weight|Mas"
+"s of pendulum without weight|Length of Arm|Mass of Arm|Moment of inertia of A"
+"rm|Moment of inertia of Motor|g|x_0"
+	  MaskStyleString	  "edit,edit,edit,edit,edit,edit,edit,edit,edi"
+"t"
+	  MaskTunableValueString  "on,on,on,on,on,on,on,on,on"
+	  MaskCallbackString	  "||||||||"
+	  MaskEnableString	  "on,on,on,on,on,on,on,on,on"
+	  MaskVisibilityString	  "on,on,on,on,on,on,on,on,on"
+	  MaskToolTipString	  "on,on,on,on,on,on,on,on,on"
+	  MaskVariables		  "lp=@1;M=@2;mpa=@3;r=@4;ma=@5;Jarm=@6;Jm=@7;"
+"g=@8;x_0=@9;"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskIconUnits		  "autoscale"
+	  MaskValueString	  "lp|M|mpa|r|ma|Jarm|Jm|g|x0"
+	  MaskVariableAliases	  ",,,,,,,,"
+	  System {
+	    Name		    "Furuta pendulum"
+	    Location		    [249, 639, 573, 820]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u"
+	      Position		      [25, 48, 55, 62]
+	      Port		      "1"
+	      LatchInput	      off
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      "Demux"
+	      Ports		      [1, 4]
+	      Position		      [185, 37, 220, 73]
+	      Outputs		      "4"
+	      BusSelectionMode	      off
+	    }
+	    Block {
+	      BlockType		      "S-Function"
+	      Name		      "S-Function1"
+	      Ports		      [1, 1]
+	      Position		      [80, 30, 140, 80]
+	      NamePlacement	      "alternate"
+	      FunctionName	      "furuta"
+	      Parameters	      "lp,M,mpa,r,ma,Jarm,Jm,g,x_0"
+	      PortCounts	      "[]"
+	      SFunctionModules	      "''"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "angle"
+	      Position		      [245, 13, 275, 27]
+	      Port		      "1"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "angle vel."
+	      Position		      [265, 43, 295, 57]
+	      Port		      "2"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "arm. ang."
+	      Position		      [265, 73, 295, 87]
+	      Port		      "3"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "arm. ang. vel."
+	      Position		      [245, 113, 275, 127]
+	      Port		      "4"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "0"
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      4
+	      Points		      [5, 0]
+	      DstBlock		      "arm. ang. vel."
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      3
+	      Points		      [15, 0; 0, 20]
+	      DstBlock		      "arm. ang."
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "u"
+	      SrcPort		      1
+	      DstBlock		      "S-Function1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      2
+	      DstBlock		      "angle vel."
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      1
+	      Points		      [5, 0]
+	      DstBlock		      "angle"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "S-Function1"
+	      SrcPort		      1
+	      DstBlock		      "Demux"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Sampling"
+	  Ports			  [4, 1]
+	  Position		  [330, 73, 390, 132]
+	  ShowPortLabels	  on
+	  TreatAsAtomicUnit	  off
+	  RTWSystemCode		  "Auto"
+	  RTWFcnNameOpts	  "Auto"
+	  RTWFileNameOpts	  "Auto"
+	  System {
+	    Name		    "Sampling"
+	    Location		    [834, 369, 1234, 555]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Theta"
+	      Position		      [20, 13, 50, 27]
+	      Port		      "1"
+	      LatchInput	      off
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Thetadot"
+	      Position		      [20, 43, 50, 57]
+	      Port		      "2"
+	      LatchInput	      off
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Phi"
+	      Position		      [20, 78, 50, 92]
+	      Port		      "3"
+	      LatchInput	      off
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "Phidot"
+	      Position		      [20, 113, 50, 127]
+	      Port		      "4"
+	      LatchInput	      off
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      "Demux"
+	      Ports		      [1, 2]
+	      Position		      [225, 52, 260, 88]
+	      ShowName		      off
+	      Outputs		      "[3 1]"
+	      BusSelectionMode	      off
+	    }
+	    Block {
+	      BlockType		      Goto
+	      Name		      "Goto"
+	      Position		      [285, 130, 330, 150]
+	      GotoTag		      "phidot"
+	      TagVisibility	      "global"
+	    }
+	    Block {
+	      BlockType		      Mux
+	      Name		      "Mux"
+	      Ports		      [4, 1]
+	      Position		      [110, 52, 145, 88]
+	      Inputs		      "4"
+	      DisplayOption	      "none"
+	    }
+	    Block {
+	      BlockType		      Mux
+	      Name		      "Mux1"
+	      Ports		      [2, 1]
+	      Position		      [280, 52, 315, 88]
+	      ShowName		      off
+	      Inputs		      "2"
+	      DisplayOption	      "none"
+	    }
+	    Block {
+	      BlockType		      ZeroOrderHold
+	      Name		      "Zero-Order\nHold1"
+	      Position		      [175, 54, 205, 86]
+	      ShowName		      off
+	      SampleTime	      "h"
+	    }
+	    Block {
+	      BlockType		      Scope
+	      Name		      "x1"
+	      Ports		      [1]
+	      Position		      [170, 99, 200, 131]
+	      Floating		      off
+	      Location		      [673, 79, 997, 318]
+	      Open		      off
+	      NumInputPorts	      "1"
+	      TickLabels	      "OneTimeTick"
+	      ZoomMode		      "on"
+	      List {
+		ListType		AxesTitles
+		axes1			"%<SignalLabel>"
+	      }
+	      Grid		      "on"
+	      TimeRange		      "auto"
+	      YMin		      "-1.5"
+	      YMax		      "2.5"
+	      SaveToWorkspace	      off
+	      SaveName		      "ScopeData1"
+	      DataFormat	      "StructureWithTime"
+	      LimitDataPoints	      off
+	      MaxDataPoints	      "5000"
+	      Decimation	      "1"
+	      SampleInput	      off
+	      SampleTime	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "x"
+	      Position		      [335, 63, 365, 77]
+	      Port		      "1"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "0"
+	    }
+	    Line {
+	      SrcBlock		      "Zero-Order\nHold1"
+	      SrcPort		      1
+	      DstBlock		      "Demux"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Mux"
+	      SrcPort		      1
+	      Points		      [5, 0]
+	      Branch {
+		DstBlock		"Zero-Order\nHold1"
+		DstPort			1
+	      }
+	      Branch {
+		DstBlock		"x1"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      1
+	      DstBlock		      "Mux1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Mux1"
+	      SrcPort		      1
+	      DstBlock		      "x"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Phi"
+	      SrcPort		      1
+	      Points		      [15, 0; 0, -10]
+	      DstBlock		      "Mux"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Thetadot"
+	      SrcPort		      1
+	      Points		      [15, 0; 0, 15]
+	      DstBlock		      "Mux"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Theta"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Mux"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Phidot"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Mux"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      2
+	      Points		      [0, 0]
+	      Branch {
+		DstBlock		"Mux1"
+		DstPort			2
+	      }
+	      Branch {
+		Points			[0, 60]
+		DstBlock		"Goto"
+		DstPort			1
+	      }
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "Scope"
+	  Ports			  [1]
+	  Position		  [230, 159, 260, 191]
+	  Floating		  off
+	  Location		  [103, 497, 427, 736]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  TickLabels		  "OneTimeTick"
+	  ZoomMode		  "on"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  Grid			  "on"
+	  TimeRange		  "auto"
+	  YMin			  "-5"
+	  YMax			  "5"
+	  SaveToWorkspace	  off
+	  SaveName		  "ScopeData1"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  MaxDataPoints		  "5000"
+	  Decimation		  "1"
+	  SampleInput		  off
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "top-360\nswitching"
+	  Ports			  [1, 1]
+	  Position		  [440, 89, 495, 121]
+	  ShowPortLabels	  on
+	  TreatAsAtomicUnit	  off
+	  RTWSystemCode		  "Auto"
+	  RTWFcnNameOpts	  "Auto"
+	  RTWFileNameOpts	  "Auto"
+	  System {
+	    Name		    "top-360\nswitching"
+	    Location		    [225, 460, 852, 774]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "y"
+	      Position		      [45, 203, 75, 217]
+	      Port		      "1"
+	      LatchInput	      off
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      "Demux"
+	      Ports		      [1, 2]
+	      Position		      [105, 192, 140, 228]
+	      Outputs		      "[2 2]"
+	      BusSelectionMode	      off
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      "Demux1"
+	      Ports		      [1, 2]
+	      Position		      [180, 126, 185, 164]
+	      BackgroundColor	      "black"
+	      ShowName		      off
+	      Outputs		      "2"
+	      BusSelectionMode	      off
+	    }
+	    Block {
+	      BlockType		      Fcn
+	      Name		      "Fcn"
+	      Position		      [265, 195, 325, 225]
+	      ShowName		      off
+	      Expr		      "(u[1]>-0.3)*(u[1]<0.4)+(u[1]>2*pi-0.4)*"
+"(u[1]<2*pi+0.4)"
+	    }
+	    Block {
+	      BlockType		      Mux
+	      Name		      "Mux"
+	      Ports		      [2, 1]
+	      Position		      [435, 202, 470, 238]
+	      Inputs		      "2"
+	      DisplayOption	      "none"
+	    }
+	    Block {
+	      BlockType		      Mux
+	      Name		      "Mux1"
+	      Ports		      [2, 1]
+	      Position		      [320, 126, 325, 164]
+	      ShowName		      off
+	      Inputs		      "2"
+	      DisplayOption	      "bar"
+	    }
+	    Block {
+	      BlockType		      Switch
+	      Name		      "Switch"
+	      Position		      [365, 195, 395, 225]
+	      Threshold		      "0.5"
+	    }
+	    Block {
+	      BlockType		      SubSystem
+	      Name		      "Theta Conversion"
+	      Ports		      [1, 1]
+	      Position		      [225, 89, 285, 121]
+	      ShowPortLabels	      on
+	      TreatAsAtomicUnit	      off
+	      RTWSystemCode	      "Auto"
+	      RTWFcnNameOpts	      "Auto"
+	      RTWFileNameOpts	      "Auto"
+	      System {
+		Name			"Theta Conversion"
+		Location		[340, 167, 825, 263]
+		Open			off
+		ModelBrowserVisibility	off
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"A4"
+		PaperUnits		"centimeters"
+		ZoomFactor		"100"
+		Block {
+		  BlockType		  Inport
+		  Name			  "In1"
+		  Position		  [25, 48, 55, 62]
+		  Port			  "1"
+		  LatchInput		  off
+		  Interpolate		  on
+		}
+		Block {
+		  BlockType		  Fcn
+		  Name			  "Fcn1"
+		  Position		  [325, 30, 405, 60]
+		  Expr			  "(u[1]-u[2])*2*pi-pi"
+		}
+		Block {
+		  BlockType		  Fcn
+		  Name			  "Fcn2"
+		  Position		  [80, 39, 155, 71]
+		  Expr			  "u/(2*pi)-1/2"
+		}
+		Block {
+		  BlockType		  Mux
+		  Name			  "Mux"
+		  Ports			  [2, 1]
+		  Position		  [260, 27, 295, 63]
+		  Inputs		  "2"
+		  DisplayOption		  "none"
+		}
+		Block {
+		  BlockType		  Rounding
+		  Name			  "Rounding\nFunction"
+		  Position		  [195, 40, 225, 70]
+		  Operator		  "floor"
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "Out1"
+		  Position		  [430, 38, 460, 52]
+		  Port			  "1"
+		  OutputWhenDisabled	  "held"
+		  InitialOutput		  "0"
+		}
+		Line {
+		  SrcBlock		  "In1"
+		  SrcPort		  1
+		  DstBlock		  "Fcn2"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Fcn1"
+		  SrcPort		  1
+		  DstBlock		  "Out1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Mux"
+		  SrcPort		  1
+		  DstBlock		  "Fcn1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Fcn2"
+		  SrcPort		  1
+		  Points		  [5, 0]
+		  Branch {
+		    Points		    [0, -20]
+		    DstBlock		    "Mux"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "Rounding\nFunction"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  SrcBlock		  "Rounding\nFunction"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  2
+		}
+	      }
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "y_"
+	      Position		      [500, 213, 530, 227]
+	      Port		      "1"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "[]"
+	    }
+	    Line {
+	      SrcBlock		      "Fcn"
+	      SrcPort		      1
+	      DstBlock		      "Switch"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Switch"
+	      SrcPort		      1
+	      DstBlock		      "Mux"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Mux"
+	      SrcPort		      1
+	      DstBlock		      "y_"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "y"
+	      SrcPort		      1
+	      DstBlock		      "Demux"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      2
+	      Points		      [0, 40; 275, 0]
+	      DstBlock		      "Mux"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      1
+	      Points		      [10, 0]
+	      Branch {
+		Points			[0, -55]
+		DstBlock		"Demux1"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 40; 85, 0]
+		Branch {
+		  Points		  [110, 0]
+		  DstBlock		  "Switch"
+		  DstPort		  3
+		}
+		Branch {
+		  Points		  [0, -30]
+		  DstBlock		  "Fcn"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Demux1"
+	      SrcPort		      1
+	      Points		      [10, 0; 0, -30]
+	      DstBlock		      "Theta Conversion"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Theta Conversion"
+	      SrcPort		      1
+	      Points		      [15, 0]
+	      DstBlock		      "Mux1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Demux1"
+	      SrcPort		      2
+	      DstBlock		      "Mux1"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Mux1"
+	      SrcPort		      1
+	      Points		      [20, 0]
+	      DstBlock		      "Switch"
+	      DstPort		      1
+	    }
+	    Annotation {
+	      Position		      [103, 51]
+	      Text		      "Use the top measured values of\ntheta a"
+"nd thetadot for small angles. \nThis block also creates the top angle\nmeasur"
+"ements: they should always be \ncentered around 0 radians."
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "x"
+	  Position		  [540, 98, 570, 112]
+	  Port			  "1"
+	  OutputWhenDisabled	  "held"
+	  InitialOutput		  "0"
+	}
+	Line {
+	  SrcBlock		  "Friction Model\nCoulomb, Stic."
+	  SrcPort		  1
+	  Points		  [20, 0]
+	  Branch {
+	    Points		    [0, 70]
+	    DstBlock		    "Scope"
+	    DstPort		    1
+	  }
+	  Branch {
+	    DstBlock		    "Furuta pendulum"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  SrcBlock		  "top-360\nswitching"
+	  SrcPort		  1
+	  DstBlock		  "x"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Sampling"
+	  SrcPort		  1
+	  DstBlock		  "top-360\nswitching"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "u"
+	  SrcPort		  1
+	  DstBlock		  "Friction Model\nCoulomb, Stic."
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Furuta pendulum"
+	  SrcPort		  2
+	  DstBlock		  "Sampling"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Furuta pendulum"
+	  SrcPort		  3
+	  DstBlock		  "Sampling"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Furuta pendulum"
+	  SrcPort		  4
+	  DstBlock		  "Sampling"
+	  DstPort		  4
+	}
+	Line {
+	  SrcBlock		  "Furuta pendulum"
+	  SrcPort		  1
+	  DstBlock		  "Sampling"
+	  DstPort		  1
+	}
+      }
+    }
+  }
+}
