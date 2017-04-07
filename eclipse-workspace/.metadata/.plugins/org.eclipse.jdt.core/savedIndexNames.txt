@@ -1,0 +1,3 @@
+INDEX VERSION 1.129+/h/dc/o/tfy12ejo/furuta/eclipse-workspace/.metadata/.plugins/org.eclipse.jdt.core
+4215856164.index
+1236447234.index
