@@ -289,7 +289,7 @@ public class OpCom {
 		});
 
 		BoxPanel swingParButtonPanel = new BoxPanel(BoxPanel.VERTICAL);
-		swingParButtonPanel.setBorder(BorderFactory.createTitledBorder("Outer Parameters"));
+		swingParButtonPanel.setBorder(BorderFactory.createTitledBorder("Swing Parameters"));
 		swingParButtonPanel.addFixed(10);
 		swingParButtonPanel.add(swingParPanel);
 		swingParButtonPanel.addFixed(10);
