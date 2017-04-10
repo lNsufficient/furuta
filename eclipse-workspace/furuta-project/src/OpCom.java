@@ -10,8 +10,8 @@ public class OpCom {
 	public static final int OFF = 0, BEAM = 1, BALL = 2;
 
 	private Regul regul;
-	private PIParameters innerPar;
-	private PIDParameters outerPar;
+	private LQParameters balancePar;
+	private PIDParameters swingPar;
 	private int mode;
 
 	private PlotterPanel measurementPlotter; // has internal thread
@@ -94,8 +94,8 @@ public class OpCom {
 		plotterPanel.add(controlPlotter);
 
 		// Get initail parameters from Regul
-		innerPar = regul.getInnerParameters();
-		outerPar = regul.getOuterParameters();
+//		innerPar = regul.getInnerParameters();
+		swingPar = regul.getOuterParameters();
 
 		// Create panels for the parameter fields and labels, add labels and fields 
 		innerParPanel = new BoxPanel(BoxPanel.HORIZONTAL);
@@ -115,48 +115,48 @@ public class OpCom {
 		innerParFieldPanel.add(innerParHField);
 
 		// Set initial parameter values of the fields
-		innerParKField.setValue(innerPar.K);
-		innerParTiField.setValue(innerPar.Ti);
-		innerParTrField.setValue(innerPar.Tr);
-		innerParBetaField.setValue(innerPar.Beta);
-		innerParHField.setValue(innerPar.H);
+		innerParKField.setValue(balancePar.K);
+		innerParTiField.setValue(balancePar.Ti);
+		innerParTrField.setValue(balancePar.Tr);
+		innerParBetaField.setValue(balancePar.Beta);
+		innerParHField.setValue(balancePar.H);
 
 		// Add action listeners to the fields
 		innerParKField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				innerPar.K = innerParKField.getValue();
+				balancePar.K = innerParKField.getValue();
 				innerApplyButton.setEnabled(true);
 			}
 		});
 		innerParTiField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				innerPar.Ti = innerParTiField.getValue();
-				if (innerPar.Ti==0.0) {
-					innerPar.integratorOn = false;
+				balancePar.Ti = innerParTiField.getValue();
+				if (balancePar.Ti==0.0) {
+					balancePar.integratorOn = false;
 				}
 				else {
-					innerPar.integratorOn = true;
+					balancePar.integratorOn = true;
 				}
 				innerApplyButton.setEnabled(true);
 			}
 		});
 		innerParTrField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				innerPar.Tr = innerParTrField.getValue();
+				balancePar.Tr = innerParTrField.getValue();
 				innerApplyButton.setEnabled(true);
 			}
 		});
 		innerParBetaField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				innerPar.Beta = innerParBetaField.getValue();
+				balancePar.Beta = innerParBetaField.getValue();
 				innerApplyButton.setEnabled(true);
 			}
 		});
 		innerParHField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				innerPar.H = innerParHField.getValue();
-				outerPar.H = innerPar.H;
-				outerParHField.setValue(innerPar.H);
+				balancePar.H = innerParHField.getValue();
+				swingPar.H = balancePar.H;
+				outerParHField.setValue(balancePar.H);
 				innerApplyButton.setEnabled(true);
 				hChanged = true;
 			}
@@ -173,9 +173,9 @@ public class OpCom {
 		innerApplyButton.setEnabled(false);
 		innerApplyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				regul.setInnerParameters(innerPar);
+				regul.setInnerParameters(balancePar);
 				if (hChanged) {
-					regul.setOuterParameters(outerPar);
+					regul.setOuterParameters(swingPar);
 				}	
 				hChanged = false;
 				innerApplyButton.setEnabled(false);
@@ -211,60 +211,60 @@ public class OpCom {
 		outerParFieldPanel.add(outerParTrField);
 		outerParFieldPanel.add(outerParBetaField);
 		outerParFieldPanel.add(outerParHField);
-		outerParKField.setValue(outerPar.K);
-		outerParTiField.setValue(outerPar.Ti);
-		outerParTdField.setValue(outerPar.Td);
-		outerParNField.setValue(outerPar.N);
-		outerParTrField.setValue(outerPar.Tr);
-		outerParBetaField.setValue(outerPar.Beta);
-		outerParHField.setValue(outerPar.H);
+		outerParKField.setValue(swingPar.K);
+		outerParTiField.setValue(swingPar.Ti);
+		outerParTdField.setValue(swingPar.Td);
+		outerParNField.setValue(swingPar.N);
+		outerParTrField.setValue(swingPar.Tr);
+		outerParBetaField.setValue(swingPar.Beta);
+		outerParHField.setValue(swingPar.H);
 		outerParKField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				outerPar.K = outerParKField.getValue();
+				swingPar.K = outerParKField.getValue();
 				outerApplyButton.setEnabled(true);
 			}
 		});
 		outerParTiField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				outerPar.Ti = outerParTiField.getValue();
-				if (outerPar.Ti==0.0) {
-					outerPar.integratorOn = false;
+				swingPar.Ti = outerParTiField.getValue();
+				if (swingPar.Ti==0.0) {
+					swingPar.integratorOn = false;
 				}
 				else {
-					outerPar.integratorOn = true;
+					swingPar.integratorOn = true;
 				}
 				outerApplyButton.setEnabled(true);
 			}
 		});
 		outerParTdField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				outerPar.Td = outerParTdField.getValue();
+				swingPar.Td = outerParTdField.getValue();
 				outerApplyButton.setEnabled(true);
 			}
 		});
 		outerParNField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				outerPar.N = outerParNField.getValue();
+				swingPar.N = outerParNField.getValue();
 				outerApplyButton.setEnabled(true);
 			}
 		});
 		outerParTrField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				outerPar.Tr = outerParTrField.getValue();
+				swingPar.Tr = outerParTrField.getValue();
 				outerApplyButton.setEnabled(true);
 			}
 		});
 		outerParBetaField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				outerPar.Beta = outerParBetaField.getValue();
+				swingPar.Beta = outerParBetaField.getValue();
 				outerApplyButton.setEnabled(true);
 			}
 		});
 		outerParHField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				outerPar.H = outerParHField.getValue();
-				innerPar.H = outerPar.H;
-				innerParHField.setValue(outerPar.H);
+				swingPar.H = outerParHField.getValue();
+				balancePar.H = swingPar.H;
+				innerParHField.setValue(swingPar.H);
 				outerApplyButton.setEnabled(true);
 				hChanged = true;
 			}
@@ -279,9 +279,9 @@ public class OpCom {
 		outerApplyButton.setEnabled(false);
 		outerApplyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				regul.setOuterParameters(outerPar);
+				regul.setOuterParameters(swingPar);
 				if (hChanged) {
-					regul.setInnerParameters(innerPar);
+					regul.setInnerParameters(balancePar);
 				}	
 				hChanged = false;
 				outerApplyButton.setEnabled(false);

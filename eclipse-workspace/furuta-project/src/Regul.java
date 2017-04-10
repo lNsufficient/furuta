@@ -5,8 +5,8 @@ and replies with print-outs when the set methods are called. */
 public class Regul extends Thread {
 	public static final int OFF=0, BEAM=1, BALL=2;
 	
-	private PIParameters innerPar;
-	private PIDParameters outerPar;
+	private PIDParameters swingParameters;
+	private LQParameters balanceParameters;
 	private OpCom opcom;
 	
 	private int mode;
@@ -21,23 +21,15 @@ public class Regul extends Thread {
 	
 	/** Constructor. Sets initial values of the controller parameters and initial mode. */
 	public Regul() {
-		innerPar = new PIParameters();
-		innerPar.K = 4.0;
-		innerPar.Ti = 0.0;
-		innerPar.Tr = 10.0;
-		innerPar.Beta = 1.0;
-		innerPar.H = 0.05;
-		innerPar.integratorOn = false;
-		
-		outerPar = new PIDParameters();
-		outerPar.K = -0.05;
-		outerPar.Ti = 0.0;
-		outerPar.Td = 2.0;
-		outerPar.Tr = 10.0;
-		outerPar.N = 10.0;
-		outerPar.Beta = 1.0;
-		outerPar.H = 0.05;
-		outerPar.integratorOn = false;
+		swingParameters = new PIDParameters();
+		swingParameters.K = -0.05;
+		swingParameters.Ti = 0.0;
+		swingParameters.Td = 2.0;
+		swingParameters.Tr = 10.0;
+		swingParameters.N = 10.0;
+		swingParameters.Beta = 1.0;
+		swingParameters.H = 0.05;
+		swingParameters.integratorOn = false;
 		
 		mode = OFF;
 	}
@@ -91,15 +83,18 @@ public class Regul extends Thread {
 		doIt = false;
 	}
 	
+	
+	
 	/** Called by OpCom to set the parameter values of the inner loop. */
-	public synchronized void setInnerParameters(PIParameters p) {
+	public synchronized void setInnerParameters(LQParameters p) {
 		System.out.println("Parameters changed for inner loop");
 	}
 	
 	/** Called by OpCom during initialization to get the parameter values of the inner loop. */
-	public synchronized PIParameters getInnerParameters() {
-		return (PIParameters) innerPar.clone(); 
+	public synchronized LQParameters getInnerParameters() {
+		return (LQParameters) balanceParameters.clone(); 
 	}
+	
 	
 	/** Called by OpCom to set the parameter values of the outer loop */
 	public synchronized void setOuterParameters(PIDParameters p) {
@@ -108,7 +103,7 @@ public class Regul extends Thread {
 	
 	/** Called by OpCom during initialization to get the parameter values of the outer loop. */
 	public synchronized PIDParameters getOuterParameters() {
-		return (PIDParameters) outerPar.clone(); 
+		return (PIDParameters) swingParameters.clone(); 
 	}
 	
 	/** Called by OpCom to turn off the controller. */
