@@ -51,6 +51,7 @@ public class Regul extends Thread {
 	
 	/** Run method. Sends data periodically to OpCom. */
 	public void run() {
+		//Detta borde förmodligen likna det vi gjorde i lab 1.
 		final long h = 100; // period (ms)
 		long duration;
 		long t = System.currentTimeMillis();
@@ -131,7 +132,7 @@ public class Regul extends Thread {
 		System.out.println("Controller in SWING mode");
 	}
 	
-	/** Called by OpCom during initialization to get the initail mode of the controller. */
+	/** Called by OpCom during initialization to get the initial mode of the controller. */
 	public synchronized int getMode() {
 		return mode;
 	}
