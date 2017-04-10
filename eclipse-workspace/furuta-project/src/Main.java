@@ -12,6 +12,8 @@ public class Main {
 		    public void run() {
 		      opcom.initializeGUI();
 		      opcom.start();
+		      I_ODemo demo = new I_ODemo();
+		      demo.start();
 		    }
 		};
 		try {
