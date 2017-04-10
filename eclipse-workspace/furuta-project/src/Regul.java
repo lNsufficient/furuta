@@ -31,6 +31,16 @@ public class Regul extends Thread {
 		swingParameters.H = 0.05;
 		swingParameters.integratorOn = false;
 		
+		balanceParameters = new LQParameters();
+		balanceParameters.K = -0.05;
+		balanceParameters.Ti = 0.0;
+		balanceParameters.Td = 2.0;
+		balanceParameters.Tr = 10.0;
+		balanceParameters.N = 10.0;
+		balanceParameters.Beta = 1.0;
+		balanceParameters.H = 0.05;
+		balanceParameters.integratorOn = false;
+		
 		mode = OFF;
 	}
 	
@@ -86,23 +96,23 @@ public class Regul extends Thread {
 	
 	
 	/** Called by OpCom to set the parameter values of the inner loop. */
-	public synchronized void setInnerParameters(LQParameters p) {
+	public synchronized void setBalanceParameters(LQParameters p) {
 		System.out.println("Parameters changed for inner loop");
 	}
 	
 	/** Called by OpCom during initialization to get the parameter values of the inner loop. */
-	public synchronized LQParameters getInnerParameters() {
+	public synchronized LQParameters getBalanceParameters() {
 		return (LQParameters) balanceParameters.clone(); 
 	}
 	
 	
 	/** Called by OpCom to set the parameter values of the outer loop */
-	public synchronized void setOuterParameters(PIDParameters p) {
+	public synchronized void setSwingParameters(PIDParameters p) {
 		System.out.println("Parameters changed for outer loop");
 	}
 	
 	/** Called by OpCom during initialization to get the parameter values of the outer loop. */
-	public synchronized PIDParameters getOuterParameters() {
+	public synchronized PIDParameters getSwingParameters() {
 		return (PIDParameters) swingParameters.clone(); 
 	}
 	
@@ -112,13 +122,13 @@ public class Regul extends Thread {
 	}
 	
 	/** Called by OpCom to set the Controller in BEAM mode. */
-	public synchronized void setBEAMMode() {
-		System.out.println("Controller in BEAM mode");
+	public synchronized void setBalanceMode() {
+		System.out.println("Controller in BALANCE mode");
 	}
 	
 	/** Called by OpCom to set the Controller in BALL mode. */
-	public synchronized void setBALLMode() {
-		System.out.println("Controller in BALL mode");
+	public synchronized void setSwingMode() {
+		System.out.println("Controller in SWING mode");
 	}
 	
 	/** Called by OpCom during initialization to get the initail mode of the controller. */

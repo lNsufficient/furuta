@@ -21,29 +21,29 @@ public class OpCom {
 	private JFrame frame;
 
 	// Declarartion of panels.
-	private BoxPanel guiPanel, plotterPanel, innerParPanel, outerParPanel, buttonPanel;
-	private JPanel innerParLabelPanel, innerParFieldPanel, outerParLabelPanel, outerParFieldPanel, leftPanel;
+	private BoxPanel guiPanel, plotterPanel, balanceParPanel, swingParPanel, buttonPanel;
+	private JPanel balanceParLabelPanel, balanceParFieldPanel, swingParLabelPanel, swingParFieldPanel, leftPanel;
 
 	// Declaration of components.
-	private DoubleField innerParKField = new DoubleField(5,3);
-	private DoubleField innerParTiField = new DoubleField(5,3);
-	private DoubleField innerParTrField = new DoubleField(5,3);
-	private DoubleField innerParBetaField = new DoubleField(5,3);
-	private DoubleField innerParHField = new DoubleField(5,3);
-	private JButton innerApplyButton;
+	private DoubleField balanceParKField = new DoubleField(5,3);
+	private DoubleField balanceParTiField = new DoubleField(5,3);
+	private DoubleField balanceParTrField = new DoubleField(5,3);
+	private DoubleField balanceParBetaField = new DoubleField(5,3);
+	private DoubleField balanceParHField = new DoubleField(5,3);
+	private JButton balanceApplyButton;
 
-	private DoubleField outerParKField = new DoubleField(5,3);
-	private DoubleField outerParTiField = new DoubleField(5,3);
-	private DoubleField outerParTdField = new DoubleField(5,3);
-	private DoubleField outerParTrField = new DoubleField(5,3);
-	private DoubleField outerParNField = new DoubleField(5,3);
-	private DoubleField outerParBetaField = new DoubleField(5,3);
-	private DoubleField outerParHField = new DoubleField(5,3);
-	private JButton outerApplyButton;
+	private DoubleField swingParKField = new DoubleField(5,3);
+	private DoubleField swingParTiField = new DoubleField(5,3);
+	private DoubleField swingParTdField = new DoubleField(5,3);
+	private DoubleField swingParTrField = new DoubleField(5,3);
+	private DoubleField swingParNField = new DoubleField(5,3);
+	private DoubleField swingParBetaField = new DoubleField(5,3);
+	private DoubleField swingParHField = new DoubleField(5,3);
+	private JButton swingApplyButton;
 
 	private JRadioButton offModeButton;
-	private JRadioButton beamModeButton;
-	private JRadioButton ballModeButton;
+	private JRadioButton balanceModeButton;
+	private JRadioButton swingModeButton;
 	private JButton stopButton;
 
 	private double range = 10.0; // Range of time axis
@@ -78,7 +78,7 @@ public class OpCom {
 	/** Creates the GUI. Called from Main. */
 	public void initializeGUI() {
 		// Create main frame.
-		frame = new JFrame("Ball and Beam GUI");
+		frame = new JFrame("Furuta GUI");
 
 		// Create a panel for the two plotters.
 		plotterPanel = new BoxPanel(BoxPanel.VERTICAL);
@@ -94,233 +94,233 @@ public class OpCom {
 		plotterPanel.add(controlPlotter);
 
 		// Get initail parameters from Regul
-//		innerPar = regul.getInnerParameters();
-		swingPar = regul.getOuterParameters();
+		balancePar = regul.getBalanceParameters();
+		swingPar = regul.getSwingParameters();
 
 		// Create panels for the parameter fields and labels, add labels and fields 
-		innerParPanel = new BoxPanel(BoxPanel.HORIZONTAL);
-		innerParLabelPanel = new JPanel();
-		innerParLabelPanel.setLayout(new GridLayout(0,1));
-		innerParLabelPanel.add(new JLabel("K: "));
-		innerParLabelPanel.add(new JLabel("Ti: "));
-		innerParLabelPanel.add(new JLabel("Tr: "));
-		innerParLabelPanel.add(new JLabel("Beta: "));
-		innerParLabelPanel.add(new JLabel("h: "));
-		innerParFieldPanel = new JPanel();
-		innerParFieldPanel.setLayout(new GridLayout(0,1));
-		innerParFieldPanel.add(innerParKField); 
-		innerParFieldPanel.add(innerParTiField);
-		innerParFieldPanel.add(innerParTrField);
-		innerParFieldPanel.add(innerParBetaField);
-		innerParFieldPanel.add(innerParHField);
+		balanceParPanel = new BoxPanel(BoxPanel.HORIZONTAL);
+		balanceParLabelPanel = new JPanel();
+		balanceParLabelPanel.setLayout(new GridLayout(0,1));
+		balanceParLabelPanel.add(new JLabel("K: "));
+		balanceParLabelPanel.add(new JLabel("Ti: "));
+		balanceParLabelPanel.add(new JLabel("Tr: "));
+		balanceParLabelPanel.add(new JLabel("Beta: "));
+		balanceParLabelPanel.add(new JLabel("h: "));
+		balanceParFieldPanel = new JPanel();
+		balanceParFieldPanel.setLayout(new GridLayout(0,1));
+		balanceParFieldPanel.add(balanceParKField); 
+		balanceParFieldPanel.add(balanceParTiField);
+		balanceParFieldPanel.add(balanceParTrField);
+		balanceParFieldPanel.add(balanceParBetaField);
+		balanceParFieldPanel.add(balanceParHField);
 
 		// Set initial parameter values of the fields
-		innerParKField.setValue(balancePar.K);
-		innerParTiField.setValue(balancePar.Ti);
-		innerParTrField.setValue(balancePar.Tr);
-		innerParBetaField.setValue(balancePar.Beta);
-		innerParHField.setValue(balancePar.H);
+		balanceParKField.setValue(balancePar.K);
+		balanceParTiField.setValue(balancePar.Ti);
+		balanceParTrField.setValue(balancePar.Tr);
+		balanceParBetaField.setValue(balancePar.Beta);
+		balanceParHField.setValue(balancePar.H);
 
 		// Add action listeners to the fields
-		innerParKField.addActionListener(new ActionListener() {
+		balanceParKField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.K = innerParKField.getValue();
-				innerApplyButton.setEnabled(true);
+				balancePar.K = balanceParKField.getValue();
+				balanceApplyButton.setEnabled(true);
 			}
 		});
-		innerParTiField.addActionListener(new ActionListener() {
+		balanceParTiField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.Ti = innerParTiField.getValue();
+				balancePar.Ti = balanceParTiField.getValue();
 				if (balancePar.Ti==0.0) {
 					balancePar.integratorOn = false;
 				}
 				else {
 					balancePar.integratorOn = true;
 				}
-				innerApplyButton.setEnabled(true);
+				balanceApplyButton.setEnabled(true);
 			}
 		});
-		innerParTrField.addActionListener(new ActionListener() {
+		balanceParTrField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.Tr = innerParTrField.getValue();
-				innerApplyButton.setEnabled(true);
+				balancePar.Tr = balanceParTrField.getValue();
+				balanceApplyButton.setEnabled(true);
 			}
 		});
-		innerParBetaField.addActionListener(new ActionListener() {
+		balanceParBetaField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.Beta = innerParBetaField.getValue();
-				innerApplyButton.setEnabled(true);
+				balancePar.Beta = balanceParBetaField.getValue();
+				balanceApplyButton.setEnabled(true);
 			}
 		});
-		innerParHField.addActionListener(new ActionListener() {
+		balanceParHField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.H = innerParHField.getValue();
+				balancePar.H = balanceParHField.getValue();
 				swingPar.H = balancePar.H;
-				outerParHField.setValue(balancePar.H);
-				innerApplyButton.setEnabled(true);
+				swingParHField.setValue(balancePar.H);
+				balanceApplyButton.setEnabled(true);
 				hChanged = true;
 			}
 		});
 
 		// Add label and field panels to parameter panel
-		innerParPanel.add(innerParLabelPanel);
-		innerParPanel.addGlue();
-		innerParPanel.add(innerParFieldPanel);
-		innerParPanel.addFixed(10);
+		balanceParPanel.add(balanceParLabelPanel);
+		balanceParPanel.addGlue();
+		balanceParPanel.add(balanceParFieldPanel);
+		balanceParPanel.addFixed(10);
 
 		// Create apply button and action listener.
-		innerApplyButton = new JButton("Apply");
-		innerApplyButton.setEnabled(false);
-		innerApplyButton.addActionListener(new ActionListener() {
+		balanceApplyButton = new JButton("Apply");
+		balanceApplyButton.setEnabled(false);
+		balanceApplyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				regul.setInnerParameters(balancePar);
+				regul.setBalanceParameters(balancePar);
 				if (hChanged) {
-					regul.setOuterParameters(swingPar);
+					regul.setSwingParameters(swingPar);
 				}	
 				hChanged = false;
-				innerApplyButton.setEnabled(false);
+				balanceApplyButton.setEnabled(false);
 			}
 		});
 
 		// Create panel with border to hold apply button and parameter panel
-		BoxPanel innerParButtonPanel = new BoxPanel(BoxPanel.VERTICAL);
-		innerParButtonPanel.setBorder(BorderFactory.createTitledBorder("Inner Parameters"));
-		innerParButtonPanel.addFixed(10);
-		innerParButtonPanel.add(innerParPanel);
-		innerParButtonPanel.addFixed(10);
-		innerParButtonPanel.add(innerApplyButton);
+		BoxPanel balanceParButtonPanel = new BoxPanel(BoxPanel.VERTICAL);
+		balanceParButtonPanel.setBorder(BorderFactory.createTitledBorder("Balance Parameters"));
+		balanceParButtonPanel.addFixed(10);
+		balanceParButtonPanel.add(balanceParPanel);
+		balanceParButtonPanel.addFixed(10);
+		balanceParButtonPanel.add(balanceApplyButton);
 
-		// The same as above for the outer parameters
-		outerParPanel = new BoxPanel(BoxPanel.HORIZONTAL);
-		outerParLabelPanel = new JPanel();
-		outerParLabelPanel.setLayout(new GridLayout(0,1));
-		outerParLabelPanel.add(new JLabel("K: "));
-		outerParLabelPanel.add(new JLabel("Ti: "));
-		outerParLabelPanel.add(new JLabel("Td: "));
-		outerParLabelPanel.add(new JLabel("N: "));
-		outerParLabelPanel.add(new JLabel("Tr: "));
-		outerParLabelPanel.add(new JLabel("Beta: "));
-		outerParLabelPanel.add(new JLabel("h: "));
+		// The same as above for the swing parameters
+		swingParPanel = new BoxPanel(BoxPanel.HORIZONTAL);
+		swingParLabelPanel = new JPanel();
+		swingParLabelPanel.setLayout(new GridLayout(0,1));
+		swingParLabelPanel.add(new JLabel("K: "));
+		swingParLabelPanel.add(new JLabel("Ti: "));
+		swingParLabelPanel.add(new JLabel("Td: "));
+		swingParLabelPanel.add(new JLabel("N: "));
+		swingParLabelPanel.add(new JLabel("Tr: "));
+		swingParLabelPanel.add(new JLabel("Beta: "));
+		swingParLabelPanel.add(new JLabel("h: "));
 
-		outerParFieldPanel = new JPanel();
-		outerParFieldPanel.setLayout(new GridLayout(0,1));
-		outerParFieldPanel.add(outerParKField); 
-		outerParFieldPanel.add(outerParTiField);
-		outerParFieldPanel.add(outerParTdField);
-		outerParFieldPanel.add(outerParNField);
-		outerParFieldPanel.add(outerParTrField);
-		outerParFieldPanel.add(outerParBetaField);
-		outerParFieldPanel.add(outerParHField);
-		outerParKField.setValue(swingPar.K);
-		outerParTiField.setValue(swingPar.Ti);
-		outerParTdField.setValue(swingPar.Td);
-		outerParNField.setValue(swingPar.N);
-		outerParTrField.setValue(swingPar.Tr);
-		outerParBetaField.setValue(swingPar.Beta);
-		outerParHField.setValue(swingPar.H);
-		outerParKField.addActionListener(new ActionListener() {
+		swingParFieldPanel = new JPanel();
+		swingParFieldPanel.setLayout(new GridLayout(0,1));
+		swingParFieldPanel.add(swingParKField); 
+		swingParFieldPanel.add(swingParTiField);
+		swingParFieldPanel.add(swingParTdField);
+		swingParFieldPanel.add(swingParNField);
+		swingParFieldPanel.add(swingParTrField);
+		swingParFieldPanel.add(swingParBetaField);
+		swingParFieldPanel.add(swingParHField);
+		swingParKField.setValue(swingPar.K);
+		swingParTiField.setValue(swingPar.Ti);
+		swingParTdField.setValue(swingPar.Td);
+		swingParNField.setValue(swingPar.N);
+		swingParTrField.setValue(swingPar.Tr);
+		swingParBetaField.setValue(swingPar.Beta);
+		swingParHField.setValue(swingPar.H);
+		swingParKField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.K = outerParKField.getValue();
-				outerApplyButton.setEnabled(true);
+				swingPar.K = swingParKField.getValue();
+				swingApplyButton.setEnabled(true);
 			}
 		});
-		outerParTiField.addActionListener(new ActionListener() {
+		swingParTiField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.Ti = outerParTiField.getValue();
+				swingPar.Ti = swingParTiField.getValue();
 				if (swingPar.Ti==0.0) {
 					swingPar.integratorOn = false;
 				}
 				else {
 					swingPar.integratorOn = true;
 				}
-				outerApplyButton.setEnabled(true);
+				swingApplyButton.setEnabled(true);
 			}
 		});
-		outerParTdField.addActionListener(new ActionListener() {
+		swingParTdField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.Td = outerParTdField.getValue();
-				outerApplyButton.setEnabled(true);
+				swingPar.Td = swingParTdField.getValue();
+				swingApplyButton.setEnabled(true);
 			}
 		});
-		outerParNField.addActionListener(new ActionListener() {
+		swingParNField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.N = outerParNField.getValue();
-				outerApplyButton.setEnabled(true);
+				swingPar.N = swingParNField.getValue();
+				swingApplyButton.setEnabled(true);
 			}
 		});
-		outerParTrField.addActionListener(new ActionListener() {
+		swingParTrField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.Tr = outerParTrField.getValue();
-				outerApplyButton.setEnabled(true);
+				swingPar.Tr = swingParTrField.getValue();
+				swingApplyButton.setEnabled(true);
 			}
 		});
-		outerParBetaField.addActionListener(new ActionListener() {
+		swingParBetaField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.Beta = outerParBetaField.getValue();
-				outerApplyButton.setEnabled(true);
+				swingPar.Beta = swingParBetaField.getValue();
+				swingApplyButton.setEnabled(true);
 			}
 		});
-		outerParHField.addActionListener(new ActionListener() {
+		swingParHField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.H = outerParHField.getValue();
+				swingPar.H = swingParHField.getValue();
 				balancePar.H = swingPar.H;
-				innerParHField.setValue(swingPar.H);
-				outerApplyButton.setEnabled(true);
+				balanceParHField.setValue(swingPar.H);
+				swingApplyButton.setEnabled(true);
 				hChanged = true;
 			}
 		});
 
-		outerParPanel.add(outerParLabelPanel);
-		outerParPanel.addGlue();
-		outerParPanel.add(outerParFieldPanel);
-		outerParPanel.addFixed(10);
+		swingParPanel.add(swingParLabelPanel);
+		swingParPanel.addGlue();
+		swingParPanel.add(swingParFieldPanel);
+		swingParPanel.addFixed(10);
 
-		outerApplyButton = new JButton("Apply");
-		outerApplyButton.setEnabled(false);
-		outerApplyButton.addActionListener(new ActionListener() {
+		swingApplyButton = new JButton("Apply");
+		swingApplyButton.setEnabled(false);
+		swingApplyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				regul.setOuterParameters(swingPar);
+				regul.setSwingParameters(swingPar);
 				if (hChanged) {
-					regul.setInnerParameters(balancePar);
+					regul.setBalanceParameters(balancePar);
 				}	
 				hChanged = false;
-				outerApplyButton.setEnabled(false);
+				swingApplyButton.setEnabled(false);
 			}
 		});
 
-		BoxPanel outerParButtonPanel = new BoxPanel(BoxPanel.VERTICAL);
-		outerParButtonPanel.setBorder(BorderFactory.createTitledBorder("Outer Parameters"));
-		outerParButtonPanel.addFixed(10);
-		outerParButtonPanel.add(outerParPanel);
-		outerParButtonPanel.addFixed(10);
-		outerParButtonPanel.add(outerApplyButton);
+		BoxPanel swingParButtonPanel = new BoxPanel(BoxPanel.VERTICAL);
+		swingParButtonPanel.setBorder(BorderFactory.createTitledBorder("Outer Parameters"));
+		swingParButtonPanel.addFixed(10);
+		swingParButtonPanel.add(swingParPanel);
+		swingParButtonPanel.addFixed(10);
+		swingParButtonPanel.add(swingApplyButton);
 
 		// Create panel for the buttons.
 		buttonPanel = new BoxPanel(BoxPanel.VERTICAL);
 		// Create the buttons.
 		offModeButton = new JRadioButton("OFF");
-		beamModeButton = new JRadioButton("BEAM");
-		ballModeButton = new JRadioButton("BALL");
+		balanceModeButton = new JRadioButton("BALANCE");
+		swingModeButton = new JRadioButton("SWING");
 		stopButton = new JButton("STOP");
 		// Group the radio buttons.
 		ButtonGroup group = new ButtonGroup();
 		group.add(offModeButton);
-		group.add(beamModeButton);
-		group.add(ballModeButton);
+		group.add(balanceModeButton);
+		group.add(swingModeButton);
 		// Button action listeners.
 		offModeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				regul.setOFFMode();
 			}
 		});
-		beamModeButton.addActionListener(new ActionListener() {
+		balanceModeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				regul.setBEAMMode();
+				regul.setBalanceMode();
 			}
 		});
-		ballModeButton.addActionListener(new ActionListener() {
+		swingModeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				regul.setBALLMode();
+				regul.setSwingMode();
 			}
 		});
 		stopButton.addActionListener(new ActionListener() {
@@ -333,8 +333,8 @@ public class OpCom {
 
 		// Add buttons to button panel.
 		buttonPanel.add(offModeButton);
-		buttonPanel.add(beamModeButton);
-		buttonPanel.add(ballModeButton);
+		buttonPanel.add(balanceModeButton);
+		buttonPanel.add(swingModeButton);
 		buttonPanel.add(stopButton);
 
 		// Select initial mode.
@@ -344,18 +344,18 @@ public class OpCom {
 			offModeButton.setSelected(true);
 			break;
 		case BEAM:
-			beamModeButton.setSelected(true);
+			balanceModeButton.setSelected(true);
 			break;
 		case BALL:
-			ballModeButton.setSelected(true);
+			swingModeButton.setSelected(true);
 			break;
 		}
 
 		// Create panel holding everything but the plotters.
 		leftPanel = new JPanel();
 		leftPanel.setLayout(new BorderLayout());
-		leftPanel.add(innerParButtonPanel, BorderLayout.WEST);
-		leftPanel.add(outerParButtonPanel, BorderLayout.EAST);
+		leftPanel.add(balanceParButtonPanel, BorderLayout.WEST);
+		leftPanel.add(swingParButtonPanel, BorderLayout.EAST);
 		leftPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		// Create panel for the entire GUI.
