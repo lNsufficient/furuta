@@ -3,7 +3,7 @@ import se.lth.control.*;
 /** Dummy Regul class for exercise 4. Generates and sends sinewaves to OpCom
 and replies with print-outs when the set methods are called. */
 public class Regul extends Thread {
-	public static final int OFF=0, BEAM=1, BALL=2;
+	public static final int OFF=0, BALANCE=1, SWING=2;
 	
 	private PIDParameters swingParameters;
 	private LQParameters balanceParameters;

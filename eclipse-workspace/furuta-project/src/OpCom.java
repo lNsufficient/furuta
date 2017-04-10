@@ -7,7 +7,7 @@ import se.lth.control.plot.*;
 /** Class that creates and maintains a GUI for the Ball and Beam process.
 Uses two internal threads to update plotters */
 public class OpCom {
-	public static final int OFF = 0, BEAM = 1, BALL = 2;
+	public static final int OFF = 0, BALANCE = 1, SWING = 2;
 
 	private Regul regul;
 	private LQParameters balancePar;
@@ -343,10 +343,10 @@ public class OpCom {
 		case OFF:
 			offModeButton.setSelected(true);
 			break;
-		case BEAM:
+		case BALANCE:
 			balanceModeButton.setSelected(true);
 			break;
-		case BALL:
+		case SWING:
 			swingModeButton.setSelected(true);
 			break;
 		}
