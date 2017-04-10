@@ -11,6 +11,8 @@ public class Regul extends Thread {
 	
 	private int mode;
 	
+	private long starttime;
+	
 	private double amp = 0.5; // Amplitude of sinewaves
 	private double freq = 1.0; // Frequency of sinewaves
 	private double realTime = 0.0;
@@ -47,6 +49,15 @@ public class Regul extends Thread {
 	/** Sets up a reference to OpCom. Called from Main. */
 	public void setOpCom(OpCom o) {
 		opcom = o;
+	}
+	
+	// Called in every sample in order to send plot data to OpCom
+	private void sendDataToOpCom(double yref, double y, double u) {
+		double x = (double)(System.currentTimeMillis() - starttime) / 1000.0;
+		DoublePoint dp = new DoublePoint(x,u);
+		PlotData pd = new PlotData(x,yref,y);
+		opcom.putControlDataPoint(dp);
+		opcom.putMeasurementDataPoint(pd);
 	}
 	
 	/** Run method. Sends data periodically to OpCom. */
