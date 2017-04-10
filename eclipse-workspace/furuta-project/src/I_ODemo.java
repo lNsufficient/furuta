@@ -4,7 +4,7 @@ import se.lth.control.realtime.*;
 
 public class I_ODemo extends Thread {
 
-	
+	private double realTime = 0.0;
 	private AnalogIn yChan;
 	private AnalogOut uChan;
 	OpCom opcom;
@@ -31,16 +31,12 @@ public class I_ODemo extends Thread {
 		DoublePoint dp;
 		PlotData pd;
 		double y, r, u;
+		y = 0;
+		r = 0;
+		u = 0;
+		
 		while(true){
 			
-			pd = new PlotData();
-			pd.y = y;
-			pd.ref = r;
-			pd.x = realTime;
-			opcom.putMeasurementDataPoint(pd);
-			
-			dp = new DoublePoint(realTime,u);
-			opcom.putControlDataPoint(dp);
 
 		try {
 			uChan.set(0.0);
@@ -53,6 +49,14 @@ public class I_ODemo extends Thread {
 		} catch (Exception v) {
 			System.out.println(v);
 		}
+		pd = new PlotData();
+		pd.y = y;
+		pd.ref = r;
+		pd.x = realTime;
+		opcom.putMeasurementDataPoint(pd);
+		
+		dp = new DoublePoint(realTime,u);
+		opcom.putControlDataPoint(dp);
 		
 		System.out.println(y);
 
