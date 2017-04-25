@@ -9,7 +9,7 @@ public class Regul extends Thread {
 	public static final int OFF=0, BALANCE=1, SWING=2;
 
 	private PIDParameters swingParameters;
-	private LQParameters balanceParameters;
+	private StateFeedback balanceRegul;
 	private OpCom opcom;
 	private AnalogIn yChan;
 	private AnalogOut uChan;
@@ -17,7 +17,8 @@ public class Regul extends Thread {
 	private int mode;
 
 	private long starttime;
-
+	
+	private double[] balanceGains=new double[4];
 	private double amp = 0.5; // Amplitude of sinewaves
 	private double freq = 1.0; // Frequency of sinewaves
 	private double realTime = 0.0;
@@ -30,7 +31,7 @@ public class Regul extends Thread {
 	public Regul() {
 		
 		try {
-			uChan = new AnalogOut(0);
+			uChan = new AnalogOut(1);
 			yChan = new AnalogIn(3);
 		} catch (IOChannelException e) {
 			// TODO Auto-generated catch block
@@ -48,15 +49,11 @@ public class Regul extends Thread {
 		swingParameters.H = 0.05;
 		swingParameters.integratorOn = false;
 
-		balanceParameters = new LQParameters();
-		balanceParameters.K = -0.05;
-		balanceParameters.Ti = 0.0;
-		balanceParameters.Td = 2.0;
-		balanceParameters.Tr = 10.0;
-		balanceParameters.N = 10.0;
-		balanceParameters.Beta = 1.0;
-		balanceParameters.H = 0.05;
-		balanceParameters.integratorOn = false;
+		balanceGains[0]=-2.0758;
+		balanceGains[1]=-0.3676;
+		balanceGains[2]=-0.2456;
+		balanceGains[3]=-0.1584;
+		balanceRegul = new StateFeedback(balanceGains);
 
 		mode = OFF;
 	}
@@ -96,9 +93,11 @@ public class Regul extends Thread {
 				System.out.println(v);
 			}
 			
-			
-			
-
+			try {
+				uChan.set(0.0);
+			} catch (Exception b) {
+				System.out.println(b);
+			}
 			//y = amp * Math.sin(sinTime);
 			
 			
@@ -110,15 +109,9 @@ public class Regul extends Thread {
 			pd.ref = r;
 			pd.x = realTime;
 			opcom.putMeasurementDataPoint(pd);
-			
+
 			dp = new DoublePoint(realTime,u);
 			opcom.putControlDataPoint(dp);
-			
-			try {
-				uChan.set(0);
-			} catch (Exception b) {
-				System.out.println(b);
-			}
 
 			realTime += ((double) h)/1000.0;
 			sinTime += freq*((double) h)/1000.0;
@@ -142,14 +135,15 @@ public class Regul extends Thread {
 
 
 	/** Called by OpCom to set the parameter values of the inner loop. */
-	public synchronized void setBalanceParameters(LQParameters p) {
-		System.out.println("Parameters changed for inner loop");
+	public synchronized void setBalanceParameters(double[] gain) {
+		balanceRegul.setGain(gain);
+		System.out.println("Parameters changed for balance-controller");
 	}
 
 	/** Called by OpCom during initialization to get the parameter values of the inner loop. */
-	public synchronized LQParameters getBalanceParameters() {
-		return (LQParameters) balanceParameters.clone(); 
-	}
+//	public synchronized LQParameters getBalanceParameters() {
+		//return (LQParameters) balanceParameters.clone(); 
+//	}
 
 
 	/** Called by OpCom to set the parameter values of the outer loop */
@@ -165,19 +159,16 @@ public class Regul extends Thread {
 	/** Called by OpCom to turn off the controller. */
 	public synchronized void setOFFMode() {
 		System.out.println("Controller turned OFF");
-		mode = OFF;
 	}
 
 	/** Called by OpCom to set the Controller in BEAM mode. */
 	public synchronized void setBalanceMode() {
 		System.out.println("Controller in BALANCE mode");
-		mode = BALANCE;
 	}
 
 	/** Called by OpCom to set the Controller in BALL mode. */
 	public synchronized void setSwingMode() {
 		System.out.println("Controller in SWING mode");
-		mode = SWING;
 	}
 
 	/** Called by OpCom during initialization to get the initial mode of the controller. */
@@ -187,12 +178,6 @@ public class Regul extends Thread {
 
 	/** Called by OpCom when the Stop button is pressed. */
 	public synchronized void shutDown() {
-		doIt = false; 
-		try {
-			uChan.set(0);
-		} catch (Exception b) {
-			System.out.println(b);
-		}
 		stopThread();
 	}
 }
