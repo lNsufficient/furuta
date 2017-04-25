@@ -1,9 +1,9 @@
 
-public class stateFeedback {
+public class StateFeedback {
 	private double[] gain;
 	
 	
-	public stateFeedback(double[] gain){
+	public StateFeedback(double[] gain){
 		this.gain=gain;
 	}
 	
