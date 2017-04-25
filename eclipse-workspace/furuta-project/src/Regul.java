@@ -111,15 +111,19 @@ public class Regul extends Thread {
 		while (doIt) {
 			
 			//states[0]
-			
+			System.out.println("Mode: " + mode);
 			switch (mode) {
 				case OFF: {
 					y = 0;
+					u = 0;
 					try {
-						uChan.set(0.0);
+						uChan.set(0);
 					} catch (Exception b) {
 						System.out.println(b);
 					}
+					System.out.println("Reached end, OFF ");
+					
+					break;
 				}
 			
 				case SWING: {
@@ -131,10 +135,13 @@ public class Regul extends Thread {
 					} catch (Exception b) {
 						System.out.println(b);
 					}
-
+					System.out.println("Reached end, SWING ");
+					
+					break;
 				}
 				
 				case BALANCE: {
+					System.out.println("Inside Balance");
 					//states = 
 					
 					//u = balanceRegul.calculateOutput(states, yref);
@@ -144,6 +151,7 @@ public class Regul extends Thread {
 						states[2] = armAng.get();
 						states[3] = armVel.get();
 					} catch (Exception v) {
+						System.out.println("Read Problem balance");
 						System.out.println(v);
 					}
 					
@@ -152,11 +160,14 @@ public class Regul extends Thread {
 					try {
 						uChan.set(u);
 					} catch (Exception b) {
+						System.out.println("Write problem balance");
 						System.out.println(b);
 					}
 					
 					y = states[0];
-
+					System.out.println("Reached end, BALANCE ");
+					
+					break;
 				}
 			}
 			//y = amp * Math.sin(sinTime);
