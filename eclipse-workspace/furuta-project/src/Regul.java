@@ -114,6 +114,7 @@ public class Regul extends Thread {
 			
 			switch (mode) {
 				case OFF: {
+					y = 0;
 					try {
 						uChan.set(0.0);
 					} catch (Exception b) {
@@ -147,6 +148,7 @@ public class Regul extends Thread {
 					}
 					
 					u = balanceRegul.calculateOutput(states, 0);
+					u = 1;
 					try {
 						uChan.set(u);
 					} catch (Exception b) {
