@@ -30,7 +30,7 @@ public class Regul extends Thread {
 	public Regul() {
 		
 		try {
-			uChan = new AnalogOut(1);
+			uChan = new AnalogOut(0);
 			yChan = new AnalogIn(3);
 		} catch (IOChannelException e) {
 			// TODO Auto-generated catch block
@@ -96,11 +96,9 @@ public class Regul extends Thread {
 				System.out.println(v);
 			}
 			
-			try {
-				uChan.set(0.0);
-			} catch (Exception b) {
-				System.out.println(b);
-			}
+			
+			
+
 			//y = amp * Math.sin(sinTime);
 			
 			
@@ -112,9 +110,15 @@ public class Regul extends Thread {
 			pd.ref = r;
 			pd.x = realTime;
 			opcom.putMeasurementDataPoint(pd);
-
+			
 			dp = new DoublePoint(realTime,u);
 			opcom.putControlDataPoint(dp);
+			
+			try {
+				uChan.set(0);
+			} catch (Exception b) {
+				System.out.println(b);
+			}
 
 			realTime += ((double) h)/1000.0;
 			sinTime += freq*((double) h)/1000.0;
@@ -161,16 +165,19 @@ public class Regul extends Thread {
 	/** Called by OpCom to turn off the controller. */
 	public synchronized void setOFFMode() {
 		System.out.println("Controller turned OFF");
+		mode = OFF;
 	}
 
 	/** Called by OpCom to set the Controller in BEAM mode. */
 	public synchronized void setBalanceMode() {
 		System.out.println("Controller in BALANCE mode");
+		mode = BALANCE;
 	}
 
 	/** Called by OpCom to set the Controller in BALL mode. */
 	public synchronized void setSwingMode() {
 		System.out.println("Controller in SWING mode");
+		mode = SWING;
 	}
 
 	/** Called by OpCom during initialization to get the initial mode of the controller. */
@@ -180,6 +187,12 @@ public class Regul extends Thread {
 
 	/** Called by OpCom when the Stop button is pressed. */
 	public synchronized void shutDown() {
+		doIt = false; 
+		try {
+			uChan.set(0);
+		} catch (Exception b) {
+			System.out.println(b);
+		}
 		stopThread();
 	}
 }
