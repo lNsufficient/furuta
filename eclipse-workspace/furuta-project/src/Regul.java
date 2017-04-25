@@ -163,7 +163,7 @@ public class Regul extends Thread {
 				case SWING: {
 			
 					
-					
+					//Test
 					try {
 						uChan.set(0.0);
 					} catch (Exception b) {
