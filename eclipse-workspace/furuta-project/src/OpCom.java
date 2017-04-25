@@ -10,7 +10,7 @@ public class OpCom {
 	public static final int OFF = 0, BALANCE = 1, SWING = 2;
 
 	private Regul regul;
-	private LQParameters balancePar;
+	private double[] balancePar;
 	private PIDParameters swingPar;
 	private int mode;
 
@@ -25,10 +25,10 @@ public class OpCom {
 	private JPanel balanceParLabelPanel, balanceParFieldPanel, swingParLabelPanel, swingParFieldPanel, leftPanel;
 
 	// Declaration of components.
-	private DoubleField balanceParKField = new DoubleField(5,3);
-	private DoubleField balanceParTiField = new DoubleField(5,3);
-	private DoubleField balanceParTrField = new DoubleField(5,3);
-	private DoubleField balanceParBetaField = new DoubleField(5,3);
+	private DoubleField balanceParL1Field = new DoubleField(5,3);
+	private DoubleField balanceParL2Field = new DoubleField(5,3);
+	private DoubleField balanceParL3Field = new DoubleField(5,3);
+	private DoubleField balanceParL4Field = new DoubleField(5,3);
 	private DoubleField balanceParHField = new DoubleField(5,3);
 	private JButton balanceApplyButton;
 
@@ -93,7 +93,7 @@ public class OpCom {
 		controlPlotter.setTitle("Control");
 		plotterPanel.add(controlPlotter);
 
-		// Get initail parameters from Regul
+		// Get initial parameters from Regul
 		balancePar = regul.getBalanceParameters();
 		swingPar = regul.getSwingParameters();
 
@@ -108,57 +108,42 @@ public class OpCom {
 		balanceParLabelPanel.add(new JLabel("h: "));
 		balanceParFieldPanel = new JPanel();
 		balanceParFieldPanel.setLayout(new GridLayout(0,1));
-		balanceParFieldPanel.add(balanceParKField); 
-		balanceParFieldPanel.add(balanceParTiField);
-		balanceParFieldPanel.add(balanceParTrField);
-		balanceParFieldPanel.add(balanceParBetaField);
+		balanceParFieldPanel.add(balanceParL1Field); 
+		balanceParFieldPanel.add(balanceParL2Field);
+		balanceParFieldPanel.add(balanceParL3Field);
+		balanceParFieldPanel.add(balanceParL4Field);
 		balanceParFieldPanel.add(balanceParHField);
 
 		// Set initial parameter values of the fields
-		balanceParKField.setValue(balancePar.K);
-		balanceParTiField.setValue(balancePar.Ti);
-		balanceParTrField.setValue(balancePar.Tr);
-		balanceParBetaField.setValue(balancePar.Beta);
-		balanceParHField.setValue(balancePar.H);
+		balanceParL1Field.setValue(balancePar[0]);
+		balanceParL2Field.setValue(balancePar[1]);
+		balanceParL3Field.setValue(balancePar[2]);
+		balanceParL4Field.setValue(balancePar[3]);
+		//balanceParHField.setValue(balancePar.H);
 
 		// Add action listeners to the fields
-		balanceParKField.addActionListener(new ActionListener() {
+		balanceParL1Field.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.K = balanceParKField.getValue();
+				balancePar[0] = balanceParL1Field.getValue();
 				balanceApplyButton.setEnabled(true);
 			}
 		});
-		balanceParTiField.addActionListener(new ActionListener() {
+		balanceParL2Field.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.Ti = balanceParTiField.getValue();
-				if (balancePar.Ti==0.0) {
-					balancePar.integratorOn = false;
-				}
-				else {
-					balancePar.integratorOn = true;
-				}
+				balancePar[1] = balanceParL2Field.getValue();
 				balanceApplyButton.setEnabled(true);
 			}
 		});
-		balanceParTrField.addActionListener(new ActionListener() {
+		balanceParL3Field.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.Tr = balanceParTrField.getValue();
+				balancePar[2] = balanceParL3Field.getValue();
 				balanceApplyButton.setEnabled(true);
 			}
 		});
-		balanceParBetaField.addActionListener(new ActionListener() {
+		balanceParL4Field.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				balancePar.Beta = balanceParBetaField.getValue();
+				balancePar[3] = balanceParL4Field.getValue();
 				balanceApplyButton.setEnabled(true);
-			}
-		});
-		balanceParHField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				balancePar.H = balanceParHField.getValue();
-				swingPar.H = balancePar.H;
-				swingParHField.setValue(balancePar.H);
-				balanceApplyButton.setEnabled(true);
-				hChanged = true;
 			}
 		});
 
@@ -263,7 +248,7 @@ public class OpCom {
 		swingParHField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				swingPar.H = swingParHField.getValue();
-				balancePar.H = swingPar.H;
+				//balancePar.H = swingPar.H;
 				balanceParHField.setValue(swingPar.H);
 				swingApplyButton.setEnabled(true);
 				hChanged = true;

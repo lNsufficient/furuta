@@ -11,9 +11,17 @@ public class Regul extends Thread {
 	private PIDParameters swingParameters;
 	private StateFeedback balanceRegul;
 	private OpCom opcom;
-	private AnalogIn yChan;
+	private AnalogIn topAng, topAngVel, armAng, armVel, penAng, penVel;
+	//2 - pend top angle
+	//3 - pend top anglevel
+	//4 - arm pos
+	//5 - arm velocity
+	//6 - pendulum angle
+	//7 - pendulum vel
 	private AnalogOut uChan;
 
+	
+	
 	private int mode;
 
 	private long starttime;
@@ -32,7 +40,21 @@ public class Regul extends Thread {
 		
 		try {
 			uChan = new AnalogOut(1);
-			yChan = new AnalogIn(3);
+			
+			topAng = new AnalogIn(2);
+			topAngVel = new AnalogIn(3);
+			armAng = new AnalogIn(4);
+			armVel = new AnalogIn(5);
+			penAng = new AnalogIn(6);
+			penVel = new AnalogIn(7);
+			
+			//2 - pend top angle
+			//3 - pend top anglevel
+			//4 - arm pos
+			//5 - arm velocity
+			//6 - pendulum angle
+			//7 - pendulum vel
+			
 		} catch (IOChannelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,23 +102,60 @@ public class Regul extends Thread {
 		long t = System.currentTimeMillis();
 		DoublePoint dp;
 		PlotData pd;
-		double y, r, u;
-		y = 0;
+		double r, u, y;
+		double[] states = new double[4];
 		u = 0;
-
+		y = 0;
 		setPriority(7);
 
 		while (doIt) {
-			try {
-				y = yChan.get();
-			} catch (Exception v) {
-				System.out.println(v);
-			}
 			
-			try {
-				uChan.set(0.0);
-			} catch (Exception b) {
-				System.out.println(b);
+			//states[0]
+			
+			switch (mode) {
+				case OFF: {
+					try {
+						uChan.set(0.0);
+					} catch (Exception b) {
+						System.out.println(b);
+					}
+				}
+			
+				case SWING: {
+			
+					
+					
+					try {
+						uChan.set(0.0);
+					} catch (Exception b) {
+						System.out.println(b);
+					}
+
+				}
+				
+				case BALANCE: {
+					//states = 
+					
+					//u = balanceRegul.calculateOutput(states, yref);
+					try {
+						states[0] = topAng.get();
+						states[1] = topAngVel.get();
+						states[2] = armAng.get();
+						states[3] = armVel.get();
+					} catch (Exception v) {
+						System.out.println(v);
+					}
+					
+					u = balanceRegul.calculateOutput(states, 0);
+					try {
+						uChan.set(u);
+					} catch (Exception b) {
+						System.out.println(b);
+					}
+					
+					y = states[0];
+
+				}
 			}
 			//y = amp * Math.sin(sinTime);
 			
@@ -141,9 +200,9 @@ public class Regul extends Thread {
 	}
 
 	/** Called by OpCom during initialization to get the parameter values of the inner loop. */
-//	public synchronized LQParameters getBalanceParameters() {
-		//return (LQParameters) balanceParameters.clone(); 
-//	}
+	public synchronized double[] getBalanceParameters() {
+		return balanceRegul.getGain(); 
+	}
 
 
 	/** Called by OpCom to set the parameter values of the outer loop */
@@ -159,16 +218,19 @@ public class Regul extends Thread {
 	/** Called by OpCom to turn off the controller. */
 	public synchronized void setOFFMode() {
 		System.out.println("Controller turned OFF");
+		mode = OFF;
 	}
 
 	/** Called by OpCom to set the Controller in BEAM mode. */
 	public synchronized void setBalanceMode() {
 		System.out.println("Controller in BALANCE mode");
+		mode = BALANCE;
 	}
 
 	/** Called by OpCom to set the Controller in BALL mode. */
 	public synchronized void setSwingMode() {
 		System.out.println("Controller in SWING mode");
+		mode = SWING; 
 	}
 
 	/** Called by OpCom during initialization to get the initial mode of the controller. */
@@ -178,6 +240,12 @@ public class Regul extends Thread {
 
 	/** Called by OpCom when the Stop button is pressed. */
 	public synchronized void shutDown() {
+		try {
+			uChan.set(0.0);
+		} catch (Exception b) {
+			System.out.println(b);
+		}
+		
 		stopThread();
 	}
 }
