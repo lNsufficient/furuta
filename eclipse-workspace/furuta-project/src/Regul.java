@@ -12,6 +12,10 @@ public class Regul extends Thread {
 	private StateFeedback balanceRegul;
 	private OpCom opcom;
 	private AnalogIn topAng, topAngVel, armAng, armVel, penAng, penVel;
+	private double topAngGain = 0.058, topAngVelGain = 0.068, armAngGain = 2.56; 
+	private double armVelGain = 2, penAngGain = 0.3091, penVelGain = 3.76;
+	private double topAngOffs = 0.7792, topAngVelOffs = 0, armAngOffs = 0;
+	private double armVelOffs = 0.0708, penAngOffs = 5.1763, penVelOffs = -0.022;
 	//2 - pend top angle
 	//3 - pend top anglevel
 	//4 - arm pos
@@ -39,7 +43,7 @@ public class Regul extends Thread {
 	public Regul() {
 		
 		try {
-			uChan = new AnalogOut(1);
+			uChan = new AnalogOut(0);
 			
 			topAng = new AnalogIn(2);
 			topAngVel = new AnalogIn(3);
@@ -70,11 +74,11 @@ public class Regul extends Thread {
 		swingParameters.Beta = 1.0;
 		swingParameters.H = 0.05;
 		swingParameters.integratorOn = false;
-
-		balanceGains[0]=-2.0758;
-		balanceGains[1]=-0.3676;
-		balanceGains[2]=-0.2456;
-		balanceGains[3]=-0.1584;
+		
+		balanceGains[0]= 8.8349;
+		balanceGains[1]= 1.5804;
+		balanceGains[2]= 0.2205;
+		balanceGains[3]= 0.3049;
 		balanceRegul = new StateFeedback(balanceGains);
 
 		mode = OFF;
@@ -104,24 +108,54 @@ public class Regul extends Thread {
 		PlotData pd;
 		double r, u, y;
 		double[] states = new double[4];
+		double[] debugStates = new double[6];
 		u = 0;
 		y = 0;
+		r = 0;
 		setPriority(7);
 
 		while (doIt) {
 			
 			//states[0]
-			System.out.println("Mode: " + mode);
+			//System.out.println("Mode: " + mode);
 			switch (mode) {
 				case OFF: {
 					y = 0;
 					u = 0;
+					r = 0;
+					
+
+					try {
+						
+						debugStates[0] = (topAng.get()+ topAngOffs)*topAngGain;
+						debugStates[1] = (topAngVel.get()+ topAngVelOffs)*topAngVelGain;
+						debugStates[2] = (armAng.get()+ armAngOffs)*armAngGain;
+						debugStates[3] = (armVel.get()+ armVelOffs)*armVelGain;
+						debugStates[4] = (penAng.get()+ penAngOffs)*penAngGain;
+						debugStates[5] = (penVel.get()+ penVelOffs)*penVelGain;
+						
+						
+						
+						System.out.println("topAng " + debugStates[0]);
+						System.out.println("topAngVel " + debugStates[1]);
+						System.out.println("armAng " + debugStates[2]);
+						System.out.println("armVel " + debugStates[3]);
+						System.out.println("penAng " + debugStates[4]);
+						System.out.println("penVel " + debugStates[5]);
+					} catch (IOChannelException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					
+					
+					
 					try {
 						uChan.set(0);
 					} catch (Exception b) {
 						System.out.println(b);
 					}
-					System.out.println("Reached end, OFF ");
+					//System.out.println("Reached end, OFF ");
 					
 					break;
 				}
@@ -135,37 +169,40 @@ public class Regul extends Thread {
 					} catch (Exception b) {
 						System.out.println(b);
 					}
-					System.out.println("Reached end, SWING ");
+					//System.out.println("Reached end, SWING ");
 					
 					break;
 				}
 				
 				case BALANCE: {
-					System.out.println("Inside Balance");
+					//System.out.println("Inside Balance");
 					//states = 
 					
 					//u = balanceRegul.calculateOutput(states, yref);
 					try {
-						states[0] = topAng.get();
-						states[1] = topAngVel.get();
-						states[2] = armAng.get();
-						states[3] = armVel.get();
+						states[0] = (topAng.get()+ topAngOffs)*topAngGain;
+						states[1] = (topAngVel.get()+ topAngVelOffs)*topAngVelGain;
+						states[2] = (armAng.get()+ armAngOffs)*armAngGain;
+						states[3] = (armVel.get()+ armVelOffs)*armVelGain;
 					} catch (Exception v) {
 						System.out.println("Read Problem balance");
 						System.out.println(v);
 					}
 					
 					u = balanceRegul.calculateOutput(states, 0);
-					u = 1;
+					u = saturateU(u);
+					//u = 0;
 					try {
+						System.out.println("U has been set to " + u);
 						uChan.set(u);
+						System.out.println("U has been set to " + u);
 					} catch (Exception b) {
 						System.out.println("Write problem balance");
 						System.out.println(b);
 					}
 					
 					y = states[0];
-					System.out.println("Reached end, BALANCE ");
+					//System.out.println("Reached end, BALANCE ");
 					
 					break;
 				}
@@ -173,9 +210,9 @@ public class Regul extends Thread {
 			//y = amp * Math.sin(sinTime);
 			
 			
-			r = amp * Math.cos(sinTime);
+			//r = amp * Math.cos(sinTime);
 			//u = amp * Math.sin(sinTime);
-
+			
 			pd = new PlotData();
 			pd.y = y;
 			pd.ref = r;
@@ -198,7 +235,18 @@ public class Regul extends Thread {
 			}
 		}
 	}
-
+	
+	private double saturateU(double u) {
+		double lim = 2;
+		if (u > lim) {
+			return lim;
+		} else if (u < -lim) {
+			return -lim;
+		} else {
+			return u;
+		}
+	}
+	
 	/** Stops the thread. */
 	private void stopThread() {
 		doIt = false;

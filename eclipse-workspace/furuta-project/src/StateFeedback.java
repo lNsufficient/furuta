@@ -13,8 +13,9 @@ public class StateFeedback {
 			double u=0;
 			for(i=0;i<this.gain.length;i++){
 				u=u+this.gain[i]*(states[i]-yref);
-				System.out.println(u);
+				//System.out.println(u);
 			}
+			u = -1.4*u;
 			return u;
 		}else{
 			return 0;
