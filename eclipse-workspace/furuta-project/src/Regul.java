@@ -12,10 +12,12 @@ public class Regul extends Thread {
 	private StateFeedback balanceRegul;
 	private OpCom opcom;
 	private AnalogIn topAng, topAngVel, armAng, armVel, penAng, penVel;
-	private double topAngGain = 0.058, topAngVelGain = 0.068, armAngGain = 2.56; 
+	private double topAngGain = 0.058, topAngVelGain = 0.068, armAngGain = 2.43; 
 	private double armVelGain = 2, penAngGain = 0.3091, penVelGain = 3.76;
 	private double topAngOffs = 0.7792, topAngVelOffs = 0, armAngOffs = 0;
-	private double armVelOffs = 0.0708, penAngOffs = 5.1763, penVelOffs = -0.022;
+	private double armVelOffs = 0.0708, penVelOffs = -0.022, penAngOffs = 5.1763;
+	private double topSwitchLimit=0.5;
+
 	//2 - pend top angle
 	//3 - pend top anglevel
 	//4 - arm pos
@@ -26,7 +28,7 @@ public class Regul extends Thread {
 
 	private int mode;
 
-	private long starttime;
+	//private long starttime;
 
 	private double[] balanceGains=new double[4];
 	//	private double amp = 0.5; // Amplitude of sinewaves
@@ -87,13 +89,21 @@ public class Regul extends Thread {
 	}
 
 	// Called in every sample in order to send plot data to OpCom
-	private void sendDataToOpCom(double yref, double y, double u) {
-		double x = (double)(System.currentTimeMillis() - starttime) / 1000.0;
-		DoublePoint dp = new DoublePoint(x,u);
-		PlotData pd = new PlotData(x,yref,y);
+	private void sendDataToOpCom(double yref, double[] y, double u) {
+		//double x = (double)(System.currentTimeMillis() - starttime) / 1000.0;
+		DoublePoint dp = new DoublePoint(realTime,u);
+		PlotData pdPenAng = new PlotData(realTime,yref,y[0]);
+		PlotData pdPenVel = new PlotData(realTime,yref,y[1]);
+		PlotData pdArmAng = new PlotData(realTime,yref,y[2]);
+		PlotData pdArmVel = new PlotData(realTime,yref,y[3]);
 		opcom.putControlDataPoint(dp);
-		opcom.putMeasurementDataPoint(pd);
+		opcom.putMeasurementDataPoint(pdPenAng);
+		//		opcom.putMeasurementDataPoint(pdPenVel);
+		//		opcom.putMeasurementDataPoint(pdArmAng);
+		//	
+		balanceGains[2]= 0;	opcom.putMeasurementDataPoint(pdArmVel);
 	}
+
 
 	/** Run method. Sends data periodically to OpCom. */
 	public void run() {
@@ -101,8 +111,8 @@ public class Regul extends Thread {
 		final long h = 100; // period (ms)
 		long duration;
 		long t = System.currentTimeMillis();
-		DoublePoint dp;
-		PlotData pd;
+		//DoublePoint dp;
+		//PlotData pd;
 		double r, u, y;
 		double[] states = new double[4];
 		double[] debugStates = new double[6];
@@ -129,13 +139,23 @@ public class Regul extends Thread {
 					debugStates[3] = (armVel.get()+ armVelOffs)*armVelGain;
 					debugStates[4] = (penAng.get()+ penAngOffs)*penAngGain;
 					debugStates[5] = (penVel.get()+ penVelOffs)*penVelGain;
+					//fixar antalet varv problemet
+					for(int i = 0; i < 6; i+=2){
+						debugStates[i] = debugStates[i] % (2*Math.PI);
 
-					System.out.println("topAng " + debugStates[0]);
-					System.out.println("topAngVel " + debugStates[1]);
+						if(debugStates[i] > Math.PI){
+							debugStates[i] -= 2*Math.PI;
+						}else if(debugStates[i] < -Math.PI){
+							debugStates[i] += 2*Math.PI;
+						}System.out.println(i +"       "+ debugStates[i]/Math.PI);
+					}
+
+					//					System.out.println("topAng " + debugStates[0]);
+					//					System.out.println("topAngVel " + debugStates[1]);
 					System.out.println("armAng " + debugStates[2]);
-					System.out.println("armVel " + debugStates[3]);
-					System.out.println("penAng " + debugStates[4]);
-					System.out.println("penVel " + debugStates[5]);
+					//					System.out.println("armVel " + debugStates[3]);
+					//					System.out.println("penAng " + debugStates[4]);
+					//					System.out.println("penVel " + debugStates[5]);
 				} catch (IOChannelException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -168,10 +188,25 @@ public class Regul extends Thread {
 
 				//u = balanceRegul.calculateOutput(states, yref);
 				try {
+
 					states[0] = (topAng.get()+ topAngOffs)*topAngGain;
 					states[1] = (topAngVel.get()+ topAngVelOffs)*topAngVelGain;
 					states[2] = (armAng.get()+ armAngOffs)*armAngGain;
 					states[3] = (armVel.get()+ armVelOffs)*armVelGain;
+					//Switchar mellan Top & 360-mätning
+					if(!((Math.abs(states[2]) < topSwitchLimit) || (states[2] > Math.PI*2-topSwitchLimit&states[2]>Math.PI*2+topSwitchLimit))){
+						states[0] = (penAng.get()+ penAngOffs)*penAngGain;
+						states[1] = (penVel.get()+ penVelOffs)*penVelGain;
+					}
+					for(int i = 0; i < 4; i+=2){
+						states[i] = states[i] % (2*Math.PI);
+
+						if(states[i] > Math.PI){
+							states[i] -= 2*Math.PI;
+						}else if(states[i] < -Math.PI){
+							states[i] += 2*Math.PI;
+						}
+					}
 				} catch (Exception v) {
 					System.out.println("Read Problem balance");
 					System.out.println(v);
@@ -201,14 +236,15 @@ public class Regul extends Thread {
 			//r = amp * Math.cos(sinTime);
 			//u = amp * Math.sin(sinTime);
 
-			pd = new PlotData();
-			pd.y = y;
-			pd.ref = r;
-			pd.x = realTime;
-			opcom.putMeasurementDataPoint(pd);
-
-			dp = new DoublePoint(realTime,u);
-			opcom.putControlDataPoint(dp);
+			sendDataToOpCom(0, states, u);
+			//			pd = new PlotData();
+			//			pd.y = y;
+			//			pd.ref = r;
+			//			pd.x = realTime;
+			//			opcom.putMeasurementDataPoint(pd);
+			//
+			//			dp = new DoublePoint(realTime,u);
+			//			opcom.putControlDataPoint(dp);
 
 			realTime += ((double) h)/1000.0;
 			//			sinTime += freq*((double) h)/1000.0;
