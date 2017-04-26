@@ -41,3 +41,251 @@ org.tigris.subversion.subclipse.core.SVNException: Provided SVN information does
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
 !SUBENTRY 1 org.tigris.subversion.subclipse.core 4 4 2017-04-07 10:04:09.578
 !MESSAGE Provided SVN information does not match that on disk for project 'furuta-project'.
+!SESSION 2017-04-07 10:11:46.647 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=sv_SE
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -data /Users/Jens/Documents/Skola/Realtidssystem/furuta/eclipse-workspace -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2017-04-07 10:11:52.719
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+!SESSION 2017-04-07 10:23:04.670 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=sv_SE
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-04-07 10:23:44.021
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.core.net 1 0 2017-04-07 10:23:45.259
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-04-07 10:23:48.573
+!MESSAGE Unable to retrieve the bundle from the URI: bundleclass://org.eclipse.launchbar.ui.controls/org.eclipse.launchbar.ui.controls.internal.LaunchBarControl
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.019
+!MESSAGE Removing part descriptor with the 'org.tigris.subversion.subclipse.ui.repository.RepositoriesView' id and the 'SVN Repositories' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.026
+!MESSAGE Removing part descriptor with the 'org.tigris.subversion.subclipse.ui.svnproperties.SvnPropertiesView' id and the 'SVN Properties' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.026
+!MESSAGE Removing part descriptor with the 'org.tigris.subversion.subclipse.ui.svnproperties.SvnRevPropertiesView' id and the 'SVN Rev Properties' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.027
+!MESSAGE Removing part descriptor with the 'org.tigris.subversion.subclipse.ui.annotations.AnnotateView' id and the 'SVN Annotate' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.028
+!MESSAGE Removing part descriptor with the 'org.tigris.subversion.subclipse.ui.conflicts.TreeConflictsView' id and the 'SVN Tree Conflicts' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.028
+!MESSAGE Removing part descriptor with the 'org.eclipse.tm.terminal.view.ui.TerminalsView' id and the 'Terminal' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.029
+!MESSAGE Removing part descriptor with the 'org.eclipse.tcf.te.ui.terminals.TerminalsView' id and the 'Terminals (Old)' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.030
+!MESSAGE Removing part descriptor with the 'org.eclipse.remote.ui.view.connections' id and the 'Connections' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.030
+!MESSAGE Removing part descriptor with the 'org.eclipse.team.ccvs.ui.RepositoriesView' id and the 'CVS Repositories' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.031
+!MESSAGE Removing part descriptor with the 'org.eclipse.team.ccvs.ui.EditorsView' id and the 'CVS Editors' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.037
+!MESSAGE Removing part descriptor with the 'org.eclipse.linuxtools.oprofile.ui.OProfileView' id and the 'OProfile' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.038
+!MESSAGE Removing part descriptor with the 'org.eclipse.linuxtools.oprofile.ui.OCountView' id and the 'OCount' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.039
+!MESSAGE Removing part descriptor with the 'org.eclipse.datatools.connectivity.DataSourceExplorerNavigator' id and the 'Data Source Explorer' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.039
+!MESSAGE Removing part descriptor with the 'org.eclipse.datatools.sqltools.plan.planView' id and the 'Execution Plan' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.040
+!MESSAGE Removing part descriptor with the 'org.eclipse.datatools.sqltools.result.resultView' id and the 'SQL Results' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.040
+!MESSAGE Removing part descriptor with the 'org.eclipse.linuxtools.dataviewers.charts.view' id and the 'Chart View' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.059
+!MESSAGE Removing part descriptor with the 'com.collabnet.subversion.merge.views.MergeResultsView' id and the 'Merge Results' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.060
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.codan.internal.ui.views.ProblemDetails' id and the 'Problem Details' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.060
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.debug.ui.executablesView' id and the 'Executables' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.061
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.debug.ui.SignalsView' id and the 'Signals' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.061
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser' id and the 'Memory Browser' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.061
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.dsf.gdb.ui.tracecontrol.view' id and the 'Trace Control' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.062
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.dsf.gdb.ui.osresources.view' id and the 'OS Resources' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.062
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.dsf.debug.ui.disassembly.view' id and the 'Disassembly' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.063
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.examples.dsf.TimersView' id and the 'Timers View' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.063
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.make.ui.views.MakeView' id and the 'Build Targets' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.063
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.testsrunner.resultsview' id and the 'C/C++ Unit' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.064
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.ui.CView' id and the 'C/C++ Projects' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.064
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.ui.IndexView' id and the 'C/C++ Index' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.064
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.ui.includeBrowser' id and the 'Include Browser' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.065
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.ui.callHierarchy' id and the 'Call Hierarchy' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.065
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.ui.typeHierarchy' id and the 'Type Hierarchy' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.065
+!MESSAGE Removing part descriptor with the 'org.eclipse.cdt.visualizer.view' id and the 'Visualizer' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.066
+!MESSAGE Removing part descriptor with the 'org.eclipse.linuxtools.valgrind.ui.valgrindview' id and the 'Valgrind' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.067
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.shells.ui.view.commandsView' id and the 'Remote Shell' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.067
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.terminals.ui.view.TerminalView' id and the 'Terminals' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.067
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.ui.view.systemView' id and the 'Remote Systems' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.068
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.ui.view.teamView' id and the 'Team' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.070
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.ui.view.systemTableView' id and the 'Remote System Details' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.071
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.ui.view.SystemSearchView' id and the 'Remote Search' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.072
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.ui.view.scratchpad.SystemScratchpadViewPart' id and the 'Remote Scratchpad' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.072
+!MESSAGE Removing part descriptor with the 'org.eclipse.rse.ui.view.monitorView' id and the 'Remote Monitor' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.073
+!MESSAGE Removing part descriptor with the 'org.eclipse.pde.api.tools.ui.views.apitooling.views.apitoolingview' id and the 'API Tools' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.073
+!MESSAGE Removing part descriptor with the 'org.eclipse.pde.runtime.RegistryBrowser' id and the 'Plug-in Registry' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.074
+!MESSAGE Removing part descriptor with the 'org.eclipse.pde.ui.PluginsView' id and the 'Plug-ins' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.074
+!MESSAGE Removing part descriptor with the 'org.eclipse.pde.ui.DependenciesView' id and the 'Plug-in Dependencies' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.074
+!MESSAGE Removing part descriptor with the 'org.eclipse.pde.ui.TargetPlatformState' id and the 'Target Platform State' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.074
+!MESSAGE Removing part descriptor with the 'org.eclipse.pde.ui.ImageBrowserView' id and the 'Plug-in Image Browser' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.075
+!MESSAGE Removing part descriptor with the 'com.python.pydev.ui.hierarchy.PyHierarchyView' id and the 'Hierarchy View' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.075
+!MESSAGE Removing part descriptor with the 'com.python.pydev.analysis.indexview.PyIndexView' id and the 'Index View' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.075
+!MESSAGE Removing part descriptor with the 'org.python.pydev.navigator.view' id and the 'PyDev Package Explorer' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.076
+!MESSAGE Removing part descriptor with the 'org.python.pydev.views.PyCodeCoverageView' id and the 'Code Coverage' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.077
+!MESSAGE Removing part descriptor with the 'org.python.pydev.debug.profile.ProfileView' id and the 'Profile' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.077
+!MESSAGE Removing part descriptor with the 'org.python.pydev.views.ReferrersView' id and the 'Referrers View' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.078
+!MESSAGE Removing part descriptor with the 'org.python.pydev.views.CurrentExceptionView' id and the 'Caught Exceptions' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2017-04-07 10:23:57.078
+!MESSAGE Removing part descriptor with the 'org.python.pydev.debug.pyunit.pyUnitView' id and the 'PyUnit' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+
+!ENTRY org.eclipse.oomph.setup.ui 1 0 2017-04-07 10:23:58.524
+!MESSAGE Setup tasks were performed during startup updating 12 preferences. See '/Users/Jens/eclipse/java-neon/Eclipse.app/Contents/Eclipse/configuration/org.eclipse.oomph.setup/setup.log' for details
+!SESSION 2017-04-10 19:08:34.070 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=sv_SE
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring
+
+!ENTRY org.eclipse.core.net 1 0 2017-04-10 19:08:44.250
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-04-10 19:08:46.099
+!MESSAGE Unable to retrieve the bundle from the URI: bundleclass://org.eclipse.launchbar.ui.controls/org.eclipse.launchbar.ui.controls.internal.LaunchBarControl
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-04-10 19:08:52.464
+!MESSAGE Exception caught during execution of command '[git, --version]' in '/usr/bin', return code '1', error message 'xcode-select: note: no developer tools were found at '/Applications/Xcode.app', requesting install. Choose an option in the dialog to download the command line developer tools.
+'
+!SESSION 2017-04-25 17:24:19.874 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=sv_SE
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring
+
+!ENTRY org.eclipse.core.net 1 0 2017-04-25 17:24:56.227
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-04-25 17:24:58.256
+!MESSAGE Unable to retrieve the bundle from the URI: bundleclass://org.eclipse.launchbar.ui.controls/org.eclipse.launchbar.ui.controls.internal.LaunchBarControl
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-04-25 17:25:04.357
+!MESSAGE Exception caught during execution of command '[git, --version]' in '/usr/bin', return code '1', error message 'xcode-select: note: no developer tools were found at '/Applications/Xcode.app', requesting install. Choose an option in the dialog to download the command line developer tools.
+'
+!SESSION 2017-04-26 14:16:17.677 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_71
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=sv_SE
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/Jens/.eclipse_keyring
+
+!ENTRY org.eclipse.core.net 1 0 2017-04-26 14:16:24.909
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-04-26 14:16:26.755
+!MESSAGE Unable to retrieve the bundle from the URI: bundleclass://org.eclipse.launchbar.ui.controls/org.eclipse.launchbar.ui.controls.internal.LaunchBarControl
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-04-26 14:16:34.110
+!MESSAGE Exception caught during execution of command '[git, --version]' in '/usr/bin', return code '1', error message 'xcode-select: note: no developer tools were found at '/Applications/Xcode.app', requesting install. Choose an option in the dialog to download the command line developer tools.
+'
