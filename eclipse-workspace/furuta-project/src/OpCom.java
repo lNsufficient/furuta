@@ -14,8 +14,11 @@ public class OpCom {
 	private PIDParameters swingPar;
 	private int mode;
 
-	private PlotterPanel measurementPlotter; // has internal thread
-	private PlotterPanel controlPlotter; // has internal thread
+	private PlotterPanel pendAngPlotter; // has internal thread
+	private PlotterPanel armAngPlotter; // has internal thread
+	private PlotterPanel pendVelPlotter; // has internal thread
+	private PlotterPanel armVelPlotter; // has internal thread
+	private PlotterPanel controlPlotter;
 
 	// Declarartion of main frame.
 	private JFrame frame;
@@ -54,19 +57,28 @@ public class OpCom {
 
 	/** Constructor. Creates the plotter panels. */
 	public OpCom() {
-		measurementPlotter = new PlotterPanel(2, 4); // Two channels
+		pendAngPlotter = new PlotterPanel(2, 4); // Two channels
+		pendVelPlotter = new PlotterPanel(2, 4);
+		armAngPlotter = new PlotterPanel(1, 4);
+		armVelPlotter = new PlotterPanel(1, 4);
 		controlPlotter = new PlotterPanel(1, 4);
 	}
 
 	/** Starts the threads. */
 	public void start() {
-		measurementPlotter.start();
+		pendAngPlotter.start();
+		pendVelPlotter.start();
+		armAngPlotter.start();
+		armVelPlotter.start();
 		controlPlotter.start();
 	}
 
 	/** Stops the threads. */
 	public void stopThread() {
-		measurementPlotter.stopThread();
+		pendAngPlotter.stopThread();
+		pendVelPlotter.stopThread();
+		armVelPlotter.stopThread();
+		armAngPlotter.stopThread();
 		controlPlotter.stopThread();
 	}
 
@@ -83,12 +95,29 @@ public class OpCom {
 		// Create a panel for the two plotters.
 		plotterPanel = new BoxPanel(BoxPanel.VERTICAL);
 		// Create plot components and axes, add to plotterPanel.
-		measurementPlotter.setYAxis(2, -1, 2, 2);
-		measurementPlotter.setXAxis(range, divTicks, divGrid);
-		measurementPlotter.setTitle("Set-point and measured variable");
-		plotterPanel.add(measurementPlotter);
-		plotterPanel.addFixed(10);
-		controlPlotter.setYAxis(2, -1, 2, 2);
+		pendAngPlotter.setYAxis(4-(-4), -4, 10, 10);
+		pendAngPlotter.setXAxis(range, divTicks, divGrid);
+		pendAngPlotter.setTitle("Pendelum Angle (both)");
+		plotterPanel.add(pendAngPlotter);
+		plotterPanel.addFixed(5);
+		
+		pendVelPlotter.setYAxis(10, -5, 10, 10);
+		pendVelPlotter.setXAxis(range, divTicks, divGrid);
+		pendVelPlotter.setTitle("Pendelum Velocity (both)");
+		plotterPanel.add(pendVelPlotter);
+		plotterPanel.addFixed(5);
+		
+		armAngPlotter.setYAxis(8, -4, 2, 2);
+		armAngPlotter.setXAxis(range, divTicks, divGrid);
+		armAngPlotter.setTitle("Arm Angle");
+		plotterPanel.add(armAngPlotter);
+		
+		armVelPlotter.setYAxis(40, -20, 10, 10);
+		armVelPlotter.setXAxis(range, divTicks, divGrid);
+		armVelPlotter.setTitle("Arm Velocity");
+		plotterPanel.add(armVelPlotter);
+		
+		controlPlotter.setYAxis(4, -2, 1, 1);
 		controlPlotter.setXAxis(range, divTicks, divGrid);
 		controlPlotter.setTitle("Control");
 		plotterPanel.add(controlPlotter);
@@ -381,10 +410,24 @@ public class OpCom {
 	}
 
 	/** Called by Regul to put a measurement data point in the buffer. */
-	public synchronized void putMeasurementDataPoint(PlotData pd) {
-		double x = pd.x;
-		double ref = pd.ref;
-		double y = pd.y;
-		measurementPlotter.putData(x, ref, y);
+	public synchronized void putMeasurementDataPoint(PlotData pendAng, PlotData pendAngVel, DoublePoint armAng, DoublePoint armVel) {
+		double xAng = pendAng.x;
+		double topAng = pendAng.ref;
+		double ang = pendAng.y;
+		pendAngPlotter.putData(xAng, topAng, ang);
+		
+		double xAngVel = pendAngVel.x;
+		double topAngVel = pendAngVel.ref;
+		double angVel = pendAngVel.y;
+		pendVelPlotter.putData(xAngVel, topAngVel, angVel);
+		
+		double xArmAng = armAng.x;
+		double yArmAng = armAng.y;
+		armAngPlotter.putData(xArmAng, yArmAng);
+		
+		double xArmVel = armVel.x;
+		double yArmVel = armVel.y;
+		armVelPlotter.putData(xArmVel, yArmVel);
+		
 	}
 }

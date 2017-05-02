@@ -12,9 +12,9 @@ public class Regul extends Thread {
 	private StateFeedback balanceRegul;
 	private OpCom opcom;
 	private AnalogIn topAng, topAngVel, armAng, armVel, penAng, penVel;
-	private double topAngGain = 0.058, topAngVelGain = 0.068, armAngGain = 2.43; 
+	private double topAngGain = 0.058, topAngVelGain = 0.068*10, armAngGain = 2.43; 
 	private double armVelGain = 2, penAngGain = 0.3091, penVelGain = 3.76;
-	private double topAngOffs = 0.7792, topAngVelOffs = 0, armAngOffs = 0;
+	private double topAngOffs = 0.7792-0.7792, topAngVelOffs = 0, armAngOffs = 0;
 	private double armVelOffs = 0.0708, penVelOffs = -0.022, penAngOffs = 5.1763;
 	private double topSwitchLimit=0.5;
 
@@ -92,23 +92,32 @@ public class Regul extends Thread {
 	private void sendDataToOpCom(double yref, double[] y, double u) {
 		//double x = (double)(System.currentTimeMillis() - starttime) / 1000.0;
 		DoublePoint dp = new DoublePoint(realTime,u);
-		PlotData pdPenAng = new PlotData(realTime,yref,y[0]);
-		PlotData pdPenVel = new PlotData(realTime,yref,y[1]);
-		PlotData pdArmAng = new PlotData(realTime,yref,y[2]);
-		PlotData pdArmVel = new PlotData(realTime,yref,y[3]);
+		double y4, y5;
+		if (y.length <= 4) {
+			y4 = 0;
+			y5 = 0;
+		} else {
+			y4 = y[4];
+			y5 = y[5];
+		}
+
+		PlotData pdPenAng = new PlotData(realTime,y[0],y4);
+		PlotData pdPenVel = new PlotData(realTime,y[1],y5);
+		DoublePoint pdArmAng = new DoublePoint(realTime,y[2]);
+		DoublePoint pdArmVel = new DoublePoint(realTime,y[3]);
 		opcom.putControlDataPoint(dp);
-		opcom.putMeasurementDataPoint(pdPenAng);
+		opcom.putMeasurementDataPoint(pdPenAng, pdPenVel, pdArmAng, pdArmVel);
 		//		opcom.putMeasurementDataPoint(pdPenVel);
 		//		opcom.putMeasurementDataPoint(pdArmAng);
 		//	
-		balanceGains[2]= 0;	opcom.putMeasurementDataPoint(pdArmVel);
+		balanceGains[2]= 0;	
 	}
 
 
 	/** Run method. Sends data periodically to OpCom. */
 	public void run() {
 		//Detta borde förmodligen likna det vi gjorde i lab 1.
-		final long h = 100; // period (ms)
+		final long h = 40; // period (ms)
 		long duration;
 		long t = System.currentTimeMillis();
 		//DoublePoint dp;
@@ -147,12 +156,12 @@ public class Regul extends Thread {
 							debugStates[i] -= 2*Math.PI;
 						}else if(debugStates[i] < -Math.PI){
 							debugStates[i] += 2*Math.PI;
-						}System.out.println(i +"       "+ debugStates[i]/Math.PI);
+						}//System.out.println(i +"       "+ debugStates[i]/Math.PI);
 					}
 
 					//					System.out.println("topAng " + debugStates[0]);
 					//					System.out.println("topAngVel " + debugStates[1]);
-					System.out.println("armAng " + debugStates[2]);
+					//System.out.println("armAng " + debugStates[2]);
 					//					System.out.println("armVel " + debugStates[3]);
 					//					System.out.println("penAng " + debugStates[4]);
 					//					System.out.println("penVel " + debugStates[5]);
@@ -167,7 +176,7 @@ public class Regul extends Thread {
 					System.out.println(b);
 				}
 				//System.out.println("Reached end, OFF ");
-
+				sendDataToOpCom(0, debugStates, u);
 				break;
 			}
 
@@ -216,9 +225,9 @@ public class Regul extends Thread {
 				u = saturateU(u);
 				//u = 0;
 				try {
-					System.out.println("U has been set to " + u);
+					//System.out.println("U has been set to " + u);
 					uChan.set(u);
-					System.out.println("U has been set to " + u);
+					//System.out.println("U has been set to " + u);
 				} catch (Exception b) {
 					System.out.println("Write problem balance");
 					System.out.println(b);
@@ -226,7 +235,7 @@ public class Regul extends Thread {
 
 				y = states[0];
 				//System.out.println("Reached end, BALANCE ");
-
+				sendDataToOpCom(0, states, u);
 				break;
 			}
 			}
@@ -236,7 +245,7 @@ public class Regul extends Thread {
 			//r = amp * Math.cos(sinTime);
 			//u = amp * Math.sin(sinTime);
 
-			sendDataToOpCom(0, states, u);
+
 			//			pd = new PlotData();
 			//			pd.y = y;
 			//			pd.ref = r;

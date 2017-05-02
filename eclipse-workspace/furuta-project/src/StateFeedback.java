@@ -30,8 +30,8 @@ public class StateFeedback {
 					//System.out.println(u);
 				}
 			}
-			System.out.println(u);
-			u = 1.4*u/3.09; //Bästa skalningen evah
+			//System.out.println(u);
+			//u = 1.4*u;//3.09; //Bästa skalningen evah
 			return u;
 		}else{
 			return 0;
