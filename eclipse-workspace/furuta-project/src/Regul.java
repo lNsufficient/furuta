@@ -17,6 +17,7 @@ public class Regul extends Thread {
 	private double topAngOffs = 0.7792-0.7792, topAngVelOffs = 0, armAngOffs = 0;
 	private double armVelOffs = 0.0708, penVelOffs = -0.022, penAngOffs = 5.1763;
 	private double topSwitchLimit=0.5;
+	private EnergyControllerFuruta swingUpController;
 
 	//2 - pend top angle
 	//3 - pend top anglevel
@@ -63,7 +64,8 @@ public class Regul extends Thread {
 			e.printStackTrace();
 		}
 
-
+		swingUpController = new EnergyControllerFuruta(1.5, 50);
+		
 		swingParameters = new PIDParameters();
 		swingParameters.K = -0.05;
 		swingParameters.Ti = 0.0;
@@ -125,6 +127,7 @@ public class Regul extends Thread {
 		double r, u, y;
 		double[] states = new double[4];
 		double[] debugStates = new double[6];
+		double swingAng = 0.6;
 		u = 0;
 		y = 0;
 		r = 0;
@@ -181,15 +184,41 @@ public class Regul extends Thread {
 			}
 
 			case SWING: {
+				try {
+					states[0] = (penAng.get()+ penAngOffs)*penAngGain;
+					states[1] = (penVel.get()+ penVelOffs)*penVelGain;
+					
+					for(int i = 0; i < 4; i+=10){
+						states[i] = states[i] % (2*Math.PI);
+
+						if(states[i] > Math.PI){
+							states[i] -= 2*Math.PI;
+						}else if(states[i] < -Math.PI){
+							states[i] += 2*Math.PI;
+						}
+					}
+					
+					double swingVel = 100;
+					if (Math.abs(states[0]) < swingAng && Math.abs(states[1]) < swingVel) {
+						mode = BALANCE;
+					}
+					
+					u = swingUpController.calculateOutput(states[0], states[1]);
+				} catch (IOChannelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 
 				//Test
+				u = saturateU(u);
 				try {
-					uChan.set(0.0);
+					uChan.set(u);
 				} catch (Exception b) {
 					System.out.println(b);
 				}
 				//System.out.println("Reached end, SWING ");
-
+				sendDataToOpCom(0, states, u);
 				break;
 			}
 
@@ -220,6 +249,8 @@ public class Regul extends Thread {
 					System.out.println("Read Problem balance");
 					System.out.println(v);
 				}
+				
+
 
 				u = balanceRegul.calculateOutput(states, 0);
 				u = saturateU(u);
@@ -236,6 +267,15 @@ public class Regul extends Thread {
 				y = states[0];
 				//System.out.println("Reached end, BALANCE ");
 				sendDataToOpCom(0, states, u);
+				if (Math.abs(states[0]) > swingAng) {
+					mode = SWING;
+					try {
+						sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				break;
 			}
 			}
