@@ -18,6 +18,7 @@ public class Regul extends Thread {
 	private double armVelOffs = 0.0708, penVelOffs = -0.022, penAngOffs = 5.1763;
 	private double topSwitchLimit=0.5;
 	private EnergyControllerFuruta swingUpController;
+	private boolean firstTry = true;
 
 	//2 - pend top angle
 	//3 - pend top anglevel
@@ -65,7 +66,7 @@ public class Regul extends Thread {
 		}
 
 		swingUpController = new EnergyControllerFuruta(1.5, 50);
-		
+
 		swingParameters = new PIDParameters();
 		swingParameters.K = -0.05;
 		swingParameters.Ti = 0.0;
@@ -122,12 +123,12 @@ public class Regul extends Thread {
 		final long h = 40; // period (ms)
 		long duration;
 		long t = System.currentTimeMillis();
-		//DoublePoint dp;
-		//PlotData pd;
+
 		double r, u, y;
 		double[] states = new double[4];
 		double[] debugStates = new double[6];
 		double swingAng = 0.6;
+
 		u = 0;
 		y = 0;
 		r = 0;
@@ -135,13 +136,14 @@ public class Regul extends Thread {
 
 		while (doIt) {
 
-			//states[0]
-			//System.out.println("Mode: " + mode);
+
 			switch (mode) {
 			case OFF: {
+				firstTry = true;
 				y = 0;
 				u = 0;
 				r = 0;
+
 
 				try {
 
@@ -159,15 +161,10 @@ public class Regul extends Thread {
 							debugStates[i] -= 2*Math.PI;
 						}else if(debugStates[i] < -Math.PI){
 							debugStates[i] += 2*Math.PI;
-						}//System.out.println(i +"       "+ debugStates[i]/Math.PI);
+						}
 					}
 
-					//					System.out.println("topAng " + debugStates[0]);
-					//					System.out.println("topAngVel " + debugStates[1]);
-					//System.out.println("armAng " + debugStates[2]);
-					//					System.out.println("armVel " + debugStates[3]);
-					//					System.out.println("penAng " + debugStates[4]);
-					//					System.out.println("penVel " + debugStates[5]);
+
 				} catch (IOChannelException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -178,7 +175,7 @@ public class Regul extends Thread {
 				} catch (Exception b) {
 					System.out.println(b);
 				}
-				//System.out.println("Reached end, OFF ");
+
 				sendDataToOpCom(0, debugStates, u);
 				break;
 			}
@@ -187,7 +184,7 @@ public class Regul extends Thread {
 				try {
 					states[0] = (penAng.get()+ penAngOffs)*penAngGain;
 					states[1] = (penVel.get()+ penVelOffs)*penVelGain;
-					
+
 					for(int i = 0; i < 4; i+=10){
 						states[i] = states[i] % (2*Math.PI);
 
@@ -197,34 +194,56 @@ public class Regul extends Thread {
 							states[i] += 2*Math.PI;
 						}
 					}
-					
-					double swingVel = 100;
-					if (Math.abs(states[0]) < swingAng && Math.abs(states[1]) < swingVel) {
+
+
+					if (Math.abs(states[0] )  < swingAng) {
 						mode = BALANCE;
 					}
-					
+				//	System.out.println("Här är vi nu 1 +" + Math.abs(states[0]));
+				//	System.out.println("-0.5 +" + (Math.abs(Math.PI)-0.5));
+					if(states[0] < (Math.abs(Math.PI)-0.5) && states[1] < Math.abs(0.5) && firstTry){
+						u = 1;
+						try {
+							uChan.set(u);
+							firstTry = false;
+							sleep(150);
+						} catch (Exception b) {
+							System.out.println(b);
+						}
+
+						sendDataToOpCom(0, states, u);
+						System.out.println("puff");
+						break;
+						
+						
+					}
+
 					u = swingUpController.calculateOutput(states[0], states[1]);
+					System.out.println("swing");
+
+
 				} catch (IOChannelException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 
-				//Test
+
+
 				u = saturateU(u);
+
 				try {
 					uChan.set(u);
 				} catch (Exception b) {
 					System.out.println(b);
 				}
-				//System.out.println("Reached end, SWING ");
+
 				sendDataToOpCom(0, states, u);
 				break;
 			}
 
 			case BALANCE: { 
 
-				//u = balanceRegul.calculateOutput(states, yref);
+				firstTry = true;
 				try {
 
 					states[0] = (topAng.get()+ topAngOffs)*topAngGain;
@@ -249,11 +268,12 @@ public class Regul extends Thread {
 					System.out.println("Read Problem balance");
 					System.out.println(v);
 				}
-				
+
 
 
 				u = balanceRegul.calculateOutput(states, 0);
 				u = saturateU(u);
+
 				//u = 0;
 				try {
 					//System.out.println("U has been set to " + u);
@@ -267,37 +287,28 @@ public class Regul extends Thread {
 				y = states[0];
 				//System.out.println("Reached end, BALANCE ");
 				sendDataToOpCom(0, states, u);
-				if (Math.abs(states[0]) > swingAng) {
-					mode = SWING;
+				if (Math.abs(states[0]) > 0.6) {
 					try {
+						uChan.set(0);
 						sleep(500);
-					} catch (InterruptedException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					mode = SWING;
+
+
 				}
 				break;
 			}
+
 			}
-			//y = amp * Math.sin(sinTime);
 
 
-			//r = amp * Math.cos(sinTime);
-			//u = amp * Math.sin(sinTime);
-
-
-			//			pd = new PlotData();
-			//			pd.y = y;
-			//			pd.ref = r;
-			//			pd.x = realTime;
-			//			opcom.putMeasurementDataPoint(pd);
-			//
-			//			dp = new DoublePoint(realTime,u);
-			//			opcom.putControlDataPoint(dp);
 
 			realTime += ((double) h)/1000.0;
-			//			sinTime += freq*((double) h)/1000.0;
-			//			while (sinTime > twoPI) {sinTime -= twoPI; }
+
 
 			t += h;
 			duration = (int) (t - System.currentTimeMillis());
