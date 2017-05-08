@@ -19,19 +19,17 @@ public class StateFeedback {
 			int i;
 			double u=0;
 			//Härmar Matlab - switchar mellan de två kontrollerna
-			if(Math.abs(states[3])>=4){
+			//if(Math.abs(states[3])>=4){
+			if(false){
 				for(i=0;i<gainNoPos.length;i++){
 					u=u+gainNoPos[i]*(yref-states[i]);
-					//System.out.println(u);
 				}
 			}else{
 				for(i=0;i<gain.length;i++){
 					u=u+gain[i]*(yref-states[i]);
-					//System.out.println(u);
 				}
 			}
-			//System.out.println(u);
-			//u = 1.4*u;//3.09; //Bästa skalningen evah
+
 			return u;
 		}else{
 			return 0;
