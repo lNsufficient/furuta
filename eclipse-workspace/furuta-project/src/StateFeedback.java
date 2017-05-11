@@ -18,16 +18,10 @@ public class StateFeedback {
 		if(states.length==gain.length){
 			int i;
 			double u=0;
-			//Härmar Matlab - switchar mellan de två kontrollerna
-			//if(Math.abs(states[3])>=4){
-			if(false){
-				for(i=0;i<gainNoPos.length;i++){
-					u=u+gainNoPos[i]*(yref-states[i]);
-				}
-			}else{
+			
 				for(i=0;i<gain.length;i++){
 					u=u+gain[i]*(yref-states[i]);
-				}
+				
 			}
 
 			return u;
