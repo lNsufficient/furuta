@@ -18,20 +18,15 @@ public class Regul extends Thread {
 	private double armVelOffs = 0.0708, penVelOffs = -0.022, penAngOffs = 5.1763;
 	private double topSwitchLimit=0.5;
 	private EnergyControllerFuruta swingUpController;
-	private boolean firstTry = true;
+	private double h = 10;
+	
 	private boolean swing;
 
-	//2 - pend top angle
-	//3 - pend top anglevel
-	//4 - arm pos
-	//5 - arm velocity
-	//6 - pendulum angle
-	//7 - pendulum vel
 	private AnalogOut uChan;
 
 	private int mode;
 
-	//private long starttime;
+
 
 	private double[] balanceGains=new double[4];
 	private double realTime = 0.0;
@@ -58,21 +53,11 @@ public class Regul extends Thread {
 			//7 - pendulum vel
 
 		} catch (IOChannelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		swingUpController = new EnergyControllerFuruta(1.5, 50);
+		swingUpController = new EnergyControllerFuruta(50);
 
-		swingParameters = new PIDParameters();
-		swingParameters.K = -0.05;
-		swingParameters.Ti = 0.0;
-		swingParameters.Td = 2.0;
-		swingParameters.Tr = 10.0;
-		swingParameters.N = 10.0;
-		swingParameters.Beta = 1.0;
-		swingParameters.H = 0.05;
-		swingParameters.integratorOn = false;
 
 		balanceGains[0]= 8.8349;
 		balanceGains[1]= 1.5804;
@@ -87,21 +72,29 @@ public class Regul extends Thread {
 	public void setOpCom(OpCom o) {
 		opcom = o;
 	}
+	
+	public void setH(double h) {
+		this.h = h;
+	}
+	
+	public double getH() {
+		return h;
+	}
 
 	// Called in every sample in order to send plot data to OpCom
 	private void sendDataToOpCom(double yref, double[] y, double u) {
 		DoublePoint dp = new DoublePoint(realTime,u);
 		double y4, y5;
 		if (y.length <= 4) {
-			y4 = 0;
-			y5 = 0;
+			y4 = y[0];
+			y5 = y[1];
 		} else {
 			y4 = y[4];
 			y5 = y[5];
 		}
 
-		PlotData pdPenAng = new PlotData(realTime,y[0],y4);
-		PlotData pdPenVel = new PlotData(realTime,y[1],y5);
+		PlotData pdPenAng = new PlotData(realTime,y4, y[0]);
+		PlotData pdPenVel = new PlotData(realTime,y5, y[1]);
 		DoublePoint pdArmAng = new DoublePoint(realTime,y[2]);
 		DoublePoint pdArmVel = new DoublePoint(realTime,y[3]);
 		opcom.putControlDataPoint(dp);
@@ -112,19 +105,18 @@ public class Regul extends Thread {
 
 	/** Run method. Sends data periodically to OpCom. */
 	public void run() {
-		final long h = 10; // period (ms)
 		long duration;
 		long t = System.currentTimeMillis();
 
-		double r, u, y;
+		double u;
 		double[] states = new double[4];
 		double[] debugStates = new double[6];
 		double swingToBal = 0.1, balToSwing = 0.4;
 		//double swingAng = 0.6;
 
 		u = 0;
-		y = 0;
-		r = 0;
+
+		
 		setPriority(7);
 
 		while (doIt) {
@@ -132,11 +124,7 @@ public class Regul extends Thread {
 
 			switch (mode) {
 			case OFF: {
-				firstTry = true;
-				y = 0;
 				u = 0;
-				r = 0;
-
 
 				try {
 
@@ -159,7 +147,6 @@ public class Regul extends Thread {
 
 
 				} catch (IOChannelException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -197,27 +184,27 @@ public class Regul extends Thread {
 						mode = BALANCE;
 						break;
 						//mode = SWING;
-						
+
 					}
-//						System.out.println("Här är vi nu 1 +" + Math.abs(states[0]));
-//						System.out.println("-0.5 +" + (Math.abs(Math.PI)-0.5));
-//					if(Math.abs(states[0]) > ((Math.PI)-0.5) && Math.abs(states[1]) < Math.abs(0.5) && firstTry){
-//						u = 1;
-//						try {
-//							uChan.set(1);
-//							firstTry = false;
-//							System.out.println("Sleeping, u is " + u);
-//							sleep(150);
-//						} catch (Exception b) {
-//							System.out.println(b);
-//						}
-//
-//						sendDataToOpCom(0, states, u);
-//						System.out.println("puff");
-//						break;
-//
-//
-//					} 
+					//						System.out.println("Här är vi nu 1 +" + Math.abs(states[0]));
+					//						System.out.println("-0.5 +" + (Math.abs(Math.PI)-0.5));
+					//					if(Math.abs(states[0]) > ((Math.PI)-0.5) && Math.abs(states[1]) < Math.abs(0.5) && firstTry){
+					//						u = 1;
+					//						try {
+					//							uChan.set(1);
+					//							firstTry = false;
+					//							System.out.println("Sleeping, u is " + u);
+					//							sleep(150);
+					//						} catch (Exception b) {
+					//							System.out.println(b);
+					//						}
+					//
+					//						sendDataToOpCom(0, states, u);
+					//						System.out.println("puff");
+					//						break;
+					//
+					//
+					//					} 
 
 					u = swingUpController.calculateOutput(states[0], states[1]);
 
@@ -241,12 +228,11 @@ public class Regul extends Thread {
 			}
 
 			case BALANCE: { 
-				
+
 				if(swing){
 					System.out.println("Balance");
 					swing = false;
 				}
-				firstTry = true;
 				try {
 
 					states[0] = (topAng.get()+ topAngOffs)*topAngGain;
@@ -284,7 +270,6 @@ public class Regul extends Thread {
 					System.out.println(b);
 				}
 
-				y = states[0];
 				sendDataToOpCom(0, states, u);
 				if (Math.abs(states[0]) > balToSwing) {
 					try {
@@ -338,7 +323,11 @@ public class Regul extends Thread {
 
 	/** Called by OpCom to set the parameter values of the inner loop. */
 	public synchronized void setBalanceParameters(double[] gain) {
-		balanceRegul.setGain(gain);
+		double[] gainCopy = new double[4];
+		for (int i = 0; i < 4; i++) {
+			gainCopy[i] = gain[i];
+		}
+		balanceRegul.setGain(gainCopy);
 		System.out.println("Parameters changed for balance-controller");
 	}
 
@@ -349,13 +338,14 @@ public class Regul extends Thread {
 
 
 	/** Called by OpCom to set the parameter values of the outer loop */
-	public synchronized void setSwingParameters(PIDParameters p) {
+	public synchronized void setSwingParameters(double k) {
+		swingUpController.setK(k);
 		System.out.println("Parameters changed for outer loop");
 	}
 
 	/** Called by OpCom during initialization to get the parameter values of the outer loop. */
-	public synchronized PIDParameters getSwingParameters() {
-		return (PIDParameters) swingParameters.clone(); 
+	public synchronized double getSwingParameters() {
+		return swingUpController.getK(); 
 	}
 
 	/** Called by OpCom to turn off the controller. */

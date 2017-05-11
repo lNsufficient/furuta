@@ -11,7 +11,6 @@ public class OpCom {
 
 	private Regul regul;
 	private double[] balancePar;
-	private PIDParameters swingPar;
 	private int mode;
 
 	private PlotterPanel pendAngPlotter; // has internal thread
@@ -32,15 +31,12 @@ public class OpCom {
 	private DoubleField balanceParL2Field = new DoubleField(5,3);
 	private DoubleField balanceParL3Field = new DoubleField(5,3);
 	private DoubleField balanceParL4Field = new DoubleField(5,3);
-	private DoubleField balanceParHField = new DoubleField(5,3);
 	private JButton balanceApplyButton;
 
+	private double swingK;
+	private double swingH;
+	
 	private DoubleField swingParKField = new DoubleField(5,3);
-	private DoubleField swingParTiField = new DoubleField(5,3);
-	private DoubleField swingParTdField = new DoubleField(5,3);
-	private DoubleField swingParTrField = new DoubleField(5,3);
-	private DoubleField swingParNField = new DoubleField(5,3);
-	private DoubleField swingParBetaField = new DoubleField(5,3);
 	private DoubleField swingParHField = new DoubleField(5,3);
 	private JButton swingApplyButton;
 
@@ -95,53 +91,51 @@ public class OpCom {
 		// Create a panel for the two plotters.
 		plotterPanel = new BoxPanel(BoxPanel.VERTICAL);
 		// Create plot components and axes, add to plotterPanel.
-		pendAngPlotter.setYAxis(4-(-4), -4, 10, 10);
+		pendAngPlotter.setYAxis(4-(-4), -4, 8, 8);
 		pendAngPlotter.setXAxis(range, divTicks, divGrid);
-		pendAngPlotter.setTitle("Pendelum Angle (both)");
+		pendAngPlotter.setTitle("Pendelum Angle (red: top angle, black: 360 angle) (Unit: radians)");
 		plotterPanel.add(pendAngPlotter);
 		plotterPanel.addFixed(5);
 		
 		pendVelPlotter.setYAxis(10, -5, 10, 10);
 		pendVelPlotter.setXAxis(range, divTicks, divGrid);
-		pendVelPlotter.setTitle("Pendelum Velocity (both)");
+		pendVelPlotter.setTitle("Pendelum Velocity (red: top angle, black: 360 angle) (Unit: radians/second)");
 		plotterPanel.add(pendVelPlotter);
 		plotterPanel.addFixed(5);
 		
-		armAngPlotter.setYAxis(8, -4, 2, 2);
+		armAngPlotter.setYAxis(8, -4, 8, 8);
 		armAngPlotter.setXAxis(range, divTicks, divGrid);
-		armAngPlotter.setTitle("Arm Angle");
+		armAngPlotter.setTitle("Arm Angle (Unit: radians)");
 		plotterPanel.add(armAngPlotter);
 		
 		armVelPlotter.setYAxis(40, -20, 10, 10);
 		armVelPlotter.setXAxis(range, divTicks, divGrid);
-		armVelPlotter.setTitle("Arm Velocity");
+		armVelPlotter.setTitle("Arm Velocity (Unit: radians/second)");
 		plotterPanel.add(armVelPlotter);
 		
-		controlPlotter.setYAxis(4, -2, 1, 1);
+		controlPlotter.setYAxis(4, -2, 8, 8);
 		controlPlotter.setXAxis(range, divTicks, divGrid);
-		controlPlotter.setTitle("Control");
+		controlPlotter.setTitle("Control (Unit: volt)");
 		plotterPanel.add(controlPlotter);
 
 		// Get initial parameters from Regul
 		balancePar = regul.getBalanceParameters();
-		swingPar = regul.getSwingParameters();
+		swingK = regul.getSwingParameters();
 
 		// Create panels for the parameter fields and labels, add labels and fields 
 		balanceParPanel = new BoxPanel(BoxPanel.HORIZONTAL);
 		balanceParLabelPanel = new JPanel();
 		balanceParLabelPanel.setLayout(new GridLayout(0,1));
-		balanceParLabelPanel.add(new JLabel("K: "));
-		balanceParLabelPanel.add(new JLabel("Ti: "));
-		balanceParLabelPanel.add(new JLabel("Tr: "));
-		balanceParLabelPanel.add(new JLabel("Beta: "));
-		balanceParLabelPanel.add(new JLabel("h: "));
+		balanceParLabelPanel.add(new JLabel("L1: "));
+		balanceParLabelPanel.add(new JLabel("L2: "));
+		balanceParLabelPanel.add(new JLabel("L3: "));
+		balanceParLabelPanel.add(new JLabel("L4: "));
 		balanceParFieldPanel = new JPanel();
 		balanceParFieldPanel.setLayout(new GridLayout(0,1));
 		balanceParFieldPanel.add(balanceParL1Field); 
 		balanceParFieldPanel.add(balanceParL2Field);
 		balanceParFieldPanel.add(balanceParL3Field);
 		balanceParFieldPanel.add(balanceParL4Field);
-		balanceParFieldPanel.add(balanceParHField);
 
 		// Set initial parameter values of the fields
 		balanceParL1Field.setValue(balancePar[0]);
@@ -189,7 +183,7 @@ public class OpCom {
 			public void actionPerformed(ActionEvent e) {
 				regul.setBalanceParameters(balancePar);
 				if (hChanged) {
-					regul.setSwingParameters(swingPar);
+					regul.setSwingParameters(swingK);
 				}	
 				hChanged = false;
 				balanceApplyButton.setEnabled(false);
@@ -198,7 +192,7 @@ public class OpCom {
 
 		// Create panel with border to hold apply button and parameter panel
 		BoxPanel balanceParButtonPanel = new BoxPanel(BoxPanel.VERTICAL);
-		balanceParButtonPanel.setBorder(BorderFactory.createTitledBorder("Balance Parameters"));
+		balanceParButtonPanel.setBorder(BorderFactory.createTitledBorder("Balance"));
 		balanceParButtonPanel.addFixed(10);
 		balanceParButtonPanel.add(balanceParPanel);
 		balanceParButtonPanel.addFixed(10);
@@ -209,76 +203,24 @@ public class OpCom {
 		swingParLabelPanel = new JPanel();
 		swingParLabelPanel.setLayout(new GridLayout(0,1));
 		swingParLabelPanel.add(new JLabel("K: "));
-		swingParLabelPanel.add(new JLabel("Ti: "));
-		swingParLabelPanel.add(new JLabel("Td: "));
-		swingParLabelPanel.add(new JLabel("N: "));
-		swingParLabelPanel.add(new JLabel("Tr: "));
-		swingParLabelPanel.add(new JLabel("Beta: "));
 		swingParLabelPanel.add(new JLabel("h: "));
 
 		swingParFieldPanel = new JPanel();
 		swingParFieldPanel.setLayout(new GridLayout(0,1));
 		swingParFieldPanel.add(swingParKField); 
-		swingParFieldPanel.add(swingParTiField);
-		swingParFieldPanel.add(swingParTdField);
-		swingParFieldPanel.add(swingParNField);
-		swingParFieldPanel.add(swingParTrField);
-		swingParFieldPanel.add(swingParBetaField);
 		swingParFieldPanel.add(swingParHField);
-		swingParKField.setValue(swingPar.K);
-		swingParTiField.setValue(swingPar.Ti);
-		swingParTdField.setValue(swingPar.Td);
-		swingParNField.setValue(swingPar.N);
-		swingParTrField.setValue(swingPar.Tr);
-		swingParBetaField.setValue(swingPar.Beta);
-		swingParHField.setValue(swingPar.H);
+		swingParKField.setValue(swingK);
+		swingParHField.setValue(regul.getH());
 		swingParKField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.K = swingParKField.getValue();
-				swingApplyButton.setEnabled(true);
-			}
-		});
-		swingParTiField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				swingPar.Ti = swingParTiField.getValue();
-				if (swingPar.Ti==0.0) {
-					swingPar.integratorOn = false;
-				}
-				else {
-					swingPar.integratorOn = true;
-				}
-				swingApplyButton.setEnabled(true);
-			}
-		});
-		swingParTdField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				swingPar.Td = swingParTdField.getValue();
-				swingApplyButton.setEnabled(true);
-			}
-		});
-		swingParNField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				swingPar.N = swingParNField.getValue();
-				swingApplyButton.setEnabled(true);
-			}
-		});
-		swingParTrField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				swingPar.Tr = swingParTrField.getValue();
-				swingApplyButton.setEnabled(true);
-			}
-		});
-		swingParBetaField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				swingPar.Beta = swingParBetaField.getValue();
+				swingK = swingParKField.getValue();
 				swingApplyButton.setEnabled(true);
 			}
 		});
 		swingParHField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				swingPar.H = swingParHField.getValue();
+				swingH = swingParHField.getValue();
 				//balancePar.H = swingPar.H;
-				balanceParHField.setValue(swingPar.H);
 				swingApplyButton.setEnabled(true);
 				hChanged = true;
 			}
@@ -293,9 +235,9 @@ public class OpCom {
 		swingApplyButton.setEnabled(false);
 		swingApplyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				regul.setSwingParameters(swingPar);
+				regul.setSwingParameters(swingK);
 				if (hChanged) {
-					regul.setBalanceParameters(balancePar);
+					regul.setH(swingH);
 				}	
 				hChanged = false;
 				swingApplyButton.setEnabled(false);
@@ -303,7 +245,7 @@ public class OpCom {
 		});
 
 		BoxPanel swingParButtonPanel = new BoxPanel(BoxPanel.VERTICAL);
-		swingParButtonPanel.setBorder(BorderFactory.createTitledBorder("Swing Parameters"));
+		swingParButtonPanel.setBorder(BorderFactory.createTitledBorder("Swing"));
 		swingParButtonPanel.addFixed(10);
 		swingParButtonPanel.add(swingParPanel);
 		swingParButtonPanel.addFixed(10);

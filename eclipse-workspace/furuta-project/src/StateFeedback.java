@@ -6,12 +6,6 @@ public class StateFeedback {
 	
 	public StateFeedback(double[] gain){
 		this.gain=gain;
-		//Härmar Matlab-koden - parametrar för en andra kontroller
-		gainNoPos = new double[4];
-		gainNoPos[0]=7.534263403427089;
-		gainNoPos[1]=1.346498408759346;
-		gainNoPos[2]=0;
-		gainNoPos[3]=0.221567196742396;
 	}
 	
 	public synchronized double calculateOutput(double[] states, double yref){
@@ -36,7 +30,11 @@ public class StateFeedback {
 	}
 	
 	public synchronized double[] getGain(){
-		return this.gain;
+		double[] gainCopy = new double[4];
+		for (int i = 0; i < 4; i++) {
+			gainCopy[i] = gain[i];
+		}
+		return gainCopy;
 	}
 
 }
